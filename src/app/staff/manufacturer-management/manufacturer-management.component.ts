@@ -1,82 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import {Firm} from '../../shared/domain/Firm';
 
 @Component({
-  selector: 'app-manufacturer-management',
-  templateUrl: './manufacturer-management.component.html',
-  styleUrls: ['./manufacturer-management.component.css'],
+  // tslint:disable-next-line:component-selector
+  selector: 'nz-demo-table-basic',
+  template: './manufacturer-management-component.html',
+  styles  : []
 })
 export class ManufacturerManagementComponent implements OnInit {
-  searchValue = '';
-  filterAddressArray = [
-    { name: 'London', value: false },
-    { name: 'Sidney', value: false }
+
+  firms: Firm[] = [
+    {firmNo : 100000, firmName : '华东理工大学', firmAddress : '浙江省奉贤市海湾区海思路999号', firmTelephone : '021-6783429'},
+    {firmNo : 100001, firmName : '华南理工大学', firmAddress : '福建省奉贤市海湾区海思路999号', firmTelephone : '011-6033423'},
+    {firmNo : 100002, firmName : '华北理工大学', firmAddress : '浙江省奉贤市海湾区海思路999号', firmTelephone : '041-6743425'}
   ];
-  sortMap = {
-    name   : null,
-    age    : null,
-    address: null
-  };
-  sortName = null;
-  sortValue = null;
-  data = [
-    {
-      name   : 'John Brown',
-      age    : 32,
-      address: 'New York No. 1 Lake Park',
-    }, {
-      name   : 'Jim Green',
-      age    : 42,
-      address: 'London No. 1 Lake Park',
-    }, {
-      name   : 'Joe Black',
-      age    : 32,
-      address: 'Sidney No. 1 Lake Park',
-    }, {
-      name   : 'Jim Red',
-      age    : 32,
-      address: 'London No. 2 Lake Park',
-    }
-  ];
-  copyData = [ ...this.data ];
 
-  sort(sortName, value) {
-    this.sortName = sortName;
-    this.sortValue = value;
-    Object.keys(this.sortMap).forEach(key => {
-      if (key !== sortName) {
-        this.sortMap[ key ] = null;
-      } else {
-        this.sortMap[ key ] = value;
-      }
-    });
-    this.search();
+  constructor() {
   }
-
-  search() {
-    const searchAddress = this.filterAddressArray.filter(address => address.value);
-    const filterFunc = (item) => {
-      return (searchAddress.length ? searchAddress.some(address => item.address.indexOf(address.name) !== -1) : true) &&
-        (item.name.indexOf(this.searchValue) !== -1)
-    };
-    this.data = [ ...this.copyData.filter(item => filterFunc(item)) ];
-    this.data = [ ...this.data.sort((a, b) => {
-      if (a[ this.sortName ] > b[ this.sortName ]) {
-        return (this.sortValue === 'ascend') ? 1 : -1;
-      } else if (a[ this.sortName ] < b[ this.sortName ]) {
-        return (this.sortValue === 'ascend') ? -1 : 1;
-      } else {
-        return 0;
-      }
-    }) ];
-  }
-
-  reset(array) {
-    array.forEach(item => {
-      item.value = false;
-    });
-    this.search();
-  }
-  constructor() { }
 
   ngOnInit() {
   }
