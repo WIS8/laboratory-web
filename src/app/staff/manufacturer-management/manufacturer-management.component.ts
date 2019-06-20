@@ -5,6 +5,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import {NzMessageService} from 'ng-zorro-antd';
+import {Firm} from '../../shared/domain/Firm';
+
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,6 +21,9 @@ export class ManufacturerManagementComponent implements OnInit {
   isVisible_modify = false;    // 修改隐藏
   pageIndex = 1;
   pageSize = 20;
+
+  firms: Firm[] = [];
+
   manuData = [
     {
     firmNo: '1001',
@@ -56,7 +61,7 @@ export class ManufacturerManagementComponent implements OnInit {
         firmAddress: new FormControl('', [Validators.required]),
         firmContact: new FormControl('', [Validators.required]),
         firmTelephone: new FormControl('', [Validators.required]),
-        firmEmail: new FormControl('', [Validators.email])
+        firmEmail: new FormControl('', [Validators.email, Validators.required])
       });
       this.manuModForm = new FormGroup({
         firmNo: new FormControl('', [Validators.required]),
@@ -64,7 +69,7 @@ export class ManufacturerManagementComponent implements OnInit {
         firmAddress: new FormControl('', [Validators.required]),
         firmContact: new FormControl('', [Validators.required]),
         firmTelephone: new FormControl('', [Validators.required]),
-        firmEmail: new FormControl('', [Validators.email])
+        firmEmail: new FormControl('', [Validators.email, Validators.required])
       });
   }
 
@@ -72,21 +77,34 @@ export class ManufacturerManagementComponent implements OnInit {
   }
 
   addManu(): void {
-    this._message.create('success', '添加成功');
-    this.isVisible_add = false;
+      if (this.manuAddForm.valid) {
+        const firm: Firm = {
+          firmNo: this.manuAddForm.get('firmNo').value,
+          firmName: this.manuAddForm.get('firmName').value,
+          firmAddress: this.manuAddForm.get('firmNo').value,
+          firmContact: this.manuAddForm.get('firmName').value,
+          firmTelephone: this.manuAddForm.get('firmNo').value,
+          firmEmail: this.manuAddForm.get('firmName').value,
+        };
+        this._message.create('success', '添加成功');
+        this.isVisible_add = false;
+      } else {
+        this._message.create('warning', '填写数据有误');
+      }
     }
 
   modManu(): void {
-    this._message.create('success', '修改成功');
-    this.isVisible_modify = false;
+    if (this.manuModForm.valid) {
+      this._message.create('success', '修改成功');
+      this.isVisible_modify = false;
+    } else {
+      this._message.create('warning', '填写数据有误');
+    }
   }
 
-  getFormControl(name) {
-    return this.manuAddForm.controls[ name ];
+  modManuSet(firm: Firm): void {
+    this.manuModForm.setValue(firm);
   }
 
-  getFormControl_mod(name) {
-    return this.manuModForm.controls[ name ];
-  }
 
 }
