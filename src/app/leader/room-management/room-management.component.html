@@ -1,0 +1,131 @@
+<nz-layout class="layout">
+  <nz-header>
+    <app-leader-topbar></app-leader-topbar>
+  </nz-header>>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item>
+          <span title>
+            <i class="anticon anticon-home"></i>
+            <span>库房列表</span>
+          </span>
+        </li>
+        <li  (click)="isVisible = true;"
+
+             nz-menu-item >
+          <span title>
+            <i class="anticon anticon-plus"></i>
+            <span>添加库房</span>
+          </span>
+        </li>
+      </ul>
+
+
+    </nz-sider>
+    <nz-modal (nzOnCancel)="isVisible = false"
+
+              (nzOnOk)="addUser()"
+
+              [(nzVisible)]="isVisible"
+
+              [nzOkLoading]="okLoading"
+
+              nzOkText="添加"
+
+              nzTitle="驾驶员信息">
+
+      <form [formGroup]="userForm" nz-form>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="employeeId" nzSm="4" nzXs="24">工号</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <nz-input-number formControlName="employeeId" id="employeeId"></nz-input-number>
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="username" nzSm="4" nzXs="24">用户名</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <input formControlName="username" nz-input type="text">
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="password" nzSm="4" nzXs="24">密码</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <input formControlName="password" nz-input type="password">
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="name" nzSm="4" nzXs="24">姓名</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <input formControlName="name" nz-input type="text">
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="gender" nzSm="4" nzXs="24">性别</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <nz-radio-group formControlName="gender" id="gender" nzName="radioGroup">
+
+              <label nz-radio nzValue="MAN">男</label>
+
+              <label nz-radio nzValue="WOMAN">女</label>
+
+            </nz-radio-group>
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
+
+          <nz-form-label nzFor="age" nzSm="4" nzXs="24">年龄</nz-form-label>
+
+          <nz-form-control nzSm="18" nzXs="24">
+
+            <nz-input-number formControlName="age" id="age"></nz-input-number>
+
+          </nz-form-control>
+
+        </nz-form-item>
+
+      </form>
+
+    </nz-modal>
+
+    <nz-layout style="padding:0 24px 24px">
+      <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>List</nz-breadcrumb-item>
+        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content style="background:#fff; padding: 24px; min-height: 280px;">Content</nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
