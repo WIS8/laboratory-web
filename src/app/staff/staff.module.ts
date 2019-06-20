@@ -7,7 +7,12 @@ import {AppRoutingModule} from '../app-routing.module';
 import { StaffTopbarComponent } from './staff-topbar/staff-topbar.component';
 
 @NgModule({
-  declarations: [ ManufacturerManagementComponent, ModelManagementComponent, ApplicationManagementComponent, StaffTopbarComponent],
+  declarations: [
+    ManufacturerManagementComponent,
+    ModelManagementComponent,
+    ApplicationManagementComponent,
+    StaffTopbarComponent
+  ],
   imports: [
     CommonModule,
     AppRoutingModule

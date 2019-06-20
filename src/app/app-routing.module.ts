@@ -6,7 +6,7 @@ import {ModelManagementComponent} from './staff/model-management/model-managemen
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'firm',
     component: ManufacturerManagementComponent,
     children: []
   },

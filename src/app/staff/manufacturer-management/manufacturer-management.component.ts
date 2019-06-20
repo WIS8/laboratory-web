@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Firm} from '../../shared/domain/Firm';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'nz-demo-table-basic',
-  template: './manufacturer-management-component.html',
+  selector: 'app-manufacturer-management',
+  templateUrl: './manufacturer-management.component.html',
   styles  : []
 })
 export class ManufacturerManagementComponent implements OnInit {

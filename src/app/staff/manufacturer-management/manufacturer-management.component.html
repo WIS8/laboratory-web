@@ -9,12 +9,12 @@
   </thead>
   <tbody nz-tbody>
   <tr nz-tbody-tr *ngFor="let data of firms">
-    <td nz-td><a>{{data.name}}</a></td>
-    <td nz-td>{{data.age}}</td>
-    <td nz-td>{{data.address}}</td>
+    <td nz-td><a>{{data.firmNo}}</a></td>
+    <td nz-td>{{data.firmName}}</td>
+    <td nz-td>{{data.firmAddress}}</td>
     <td nz-td>
             <span>
-              <a href="#">Action 一 {{data.name}}</a>
+              <a href="#">Action 一 {{data.firmTelephone}</a>
               <span nz-table-divider></span>
               <a href="#">Delete</a>
               <span nz-table-divider></span>
