@@ -1,46 +1,3 @@
-<nz-table #nzTable [nzDataSource]="firms" [nzPageSize]="10">
-  <thead nz-thead>
-  <tr>
-    <th nz-th><span>厂商编号</span></th>
-    <th nz-th><span>厂商名称</span></th>
-    <th nz-th><span>厂商地址</span></th>
-    <th nz-th><span>联系电话</span></th>
-  </tr>
-  </thead>
-  <tbody nz-tbody>
-  <tr nz-tbody-tr *ngFor="let data of firms">
-    <td nz-td><a>{{data.name}}</a></td>
-    <td nz-td>{{data.age}}</td>
-    <td nz-td>{{data.address}}</td>
-    <td nz-td>
-            <span>
-              <a href="#">Action 一 {{data.name}}</a>
-              <span nz-table-divider></span>
-              <a href="#">Delete</a>
-              <span nz-table-divider></span>
-              <nz-dropdown>
-                <a class="ant-dropdown-link" nz-dropdown>
-                  More actions <i class="anticon anticon-down"></i>
-                </a>
-                <ul nz-menu>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">2nd menu item</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">3rd menu item</a>
-                  </li>
-                </ul>
-              </nz-dropdown>
-            </span>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
-
-<!--
 <nz-layout class="layout">
   <nz-header>
     <app-staff-topbar></app-staff-topbar>
@@ -51,22 +8,73 @@
         <li nz-menu-item>
           <span title><i class="anticon anticon-search"></i>厂商查询</span>
         </li>
-        <li nz-menu-item>
+        <li nz-menu-item (click)="isVisible = true;">
           <span title><i class="anticon anticon-plus"></i>添加厂商</span>
         </li>
       </ul>
     </nz-sider>
+    <nz-modal (nzOnCancel)="isVisible = false"
+              (nzOnOk)="addManu()"
+              [(nzVisible)]="isVisible"
+              nzOkText="添加"
+              nzTitle="厂商信息">
+      <form nz-form [formGroup]="manuForm" >
+        <nz-form-item>
+          <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">厂商编号</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24">
+            <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24">
+            <input formControlName="firmName" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24">
+            <input formControlName="firmAddress" nz-input type="password">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24">
+            <input formControlName="firmContact" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="firmTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24">
+            <input formControlName="firmTelephone" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('firmEmail')">
+            <input formControlName="firmEmail" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-modal>
     <nz-layout style="padding:0 24px 24px">
       <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item>厂商管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>厂商查询</nz-breadcrumb-item>
       </nz-breadcrumb>
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
+        <input #searchBox nz-input
+               placeholder="输入厂商编号进行搜索" type="text">
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon type="search"></i>
+      </ng-template>
       <nz-table #nzTable  [nzPageSize]="10">
         <thead nz-thead>
         <tr>
-          <th nz-th><span>编号</span></th>
-          <th nz-th><span>名称</span></th>
-          <th nz-th><span>地址</span></th>
+          <th nz-th><span>厂商编号</span></th>
+          <th nz-th><span>厂商名称</span></th>
+          <th nz-th><span>厂商地址</span></th>
           <th nz-th><span>联系人</span></th>
           <th nz-th><span>电话</span></th>
           <th nz-th><span>邮箱</span></th>
@@ -76,13 +84,13 @@
         </thead>
         <tbody nz-tbody>
         <tr nz-tbody-tr >
-          <td nz-td>a</td>
-          <td nz-td>v</td>
-          <td nz-td>z</td>
-          <td nz-td>x</td>
-          <td nz-td>c</td>
-          <td nz-td>q</td>
-          <td nz-td>w</td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
           <td nz-td><a href="#">修改</a></td>
         </tr>
         </tbody>
@@ -90,4 +98,4 @@
     </nz-layout>
   </nz-layout>
 </nz-layout>
--->
+

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
@@ -12,6 +12,7 @@ import {ApplicationManagementComponent} from './staff/application-management/app
 import {ManufacturerManagementComponent} from './staff/manufacturer-management/manufacturer-management.component';
 import {ModelManagementComponent} from './staff/model-management/model-management.component';
 import {StaffTopbarComponent} from './staff/staff-topbar/staff-topbar.component';
+
 
 registerLocaleData(zh);
 
@@ -30,6 +31,7 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
