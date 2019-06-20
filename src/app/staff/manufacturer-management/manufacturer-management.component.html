@@ -14,7 +14,7 @@
       </ul>
     </nz-sider>
     <nz-modal (nzOnCancel)="isVisible_add = false"
-              (nzOnOk)="addManu()"
+              (nzOnOk)="addManu();"
               [(nzVisible)]="isVisible_add"
               nzOkText="添加"
               nzTitle="厂商信息">
@@ -34,7 +34,7 @@
         <nz-form-item>
           <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-            <input formControlName="firmAddress" nz-input type="password">
+            <input formControlName="firmAddress" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -51,7 +51,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback [nzValidateStatus]="getFormControl('firmEmail')">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmEmail" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
@@ -69,30 +69,30 @@
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table #nzTable [nzPageSize]="pageSize" [(nzPageIndex)]="pageIndex">
+      <nz-table [nzPageSize]="pageSize" [(nzPageIndex)]="pageIndex" [nzShowSizeChanger]="true">
         <thead nz-thead>
-        <tr>
-          <th nz-th><span>厂商编号</span></th>
-          <th nz-th><span>厂商名称</span></th>
-          <th nz-th><span>厂商地址</span></th>
-          <th nz-th><span>联系人</span></th>
-          <th nz-th><span>电话</span></th>
-          <th nz-th><span>邮箱</span></th>
-          <th nz-th><span>添加日期</span></th>
-          <th nz-th><span>操作</span></th>
-        </tr>
+          <tr>
+            <th nz-th><span>厂商编号</span></th>
+            <th nz-th><span>厂商名称</span></th>
+            <th nz-th><span>厂商地址</span></th>
+            <th nz-th><span>联系人</span></th>
+            <th nz-th><span>电话</span></th>
+            <th nz-th><span>邮箱</span></th>
+            <th nz-th><span>添加日期</span></th>
+            <th nz-th><span>操作</span></th>
+          </tr>
         </thead>
-        <tbody nz-tbody *ngFor="let data of manuData">
-        <tr nz-tbody-tr >
-          <td nz-td>{{data.firmNo}}</td>
-          <td nz-td>{{data.firmName}}</td>
-          <td nz-td>{{data.firmAddress}}</td>
-          <td nz-td>{{data.firmContact}}</td>
-          <td nz-td>{{data.firmTelephone}}</td>
-          <td nz-td>{{data.firmEmail}}</td>
-          <td nz-td>{{data.firmAddDate}}</td>
-          <td nz-td (click)="isVisible_modify = true;"><a>修改</a></td>
-        </tr>
+        <tbody nz-tbody-tr *ngFor="let data of manuData">
+          <tr nz-tbody-tr >
+            <td nz-td>{{data.firmNo}}</td>
+            <td nz-td>{{data.firmName}}</td>
+            <td nz-td>{{data.firmAddress}}</td>
+            <td nz-td>{{data.firmContact}}</td>
+            <td nz-td>{{data.firmTelephone}}</td>
+            <td nz-td>{{data.firmEmail}}</td>
+            <td nz-td>{{data.firmAddDate|date:'yyyy-M-d'}}</td>
+            <td nz-td (click)="isVisible_modify = true;modManuSet(data)"><a>修改</a></td>
+          </tr>
         </tbody>
       </nz-table>
       <nz-modal (nzOnCancel)="isVisible_modify = false"
@@ -133,7 +133,7 @@
           </nz-form-item>
           <nz-form-item>
             <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl_mod('firmEmail')" nzHasFeedback>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
               <input formControlName="firmEmail" nz-input type="text">
             </nz-form-control>
           </nz-form-item>
