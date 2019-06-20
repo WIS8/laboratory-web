@@ -5,53 +5,53 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li nz-menu-item>
+        <li nz-menu-item nzSelected="true">
           <span title><i class="anticon anticon-search"></i>厂商查询</span>
         </li>
-        <li nz-menu-item (click)="isVisible = true;">
+        <li nz-menu-item (click)="isVisible_add = true;">
           <span title><i class="anticon anticon-plus"></i>添加厂商</span>
         </li>
       </ul>
     </nz-sider>
-    <nz-modal (nzOnCancel)="isVisible = false"
+    <nz-modal (nzOnCancel)="isVisible_add = false"
               (nzOnOk)="addManu()"
-              [(nzVisible)]="isVisible"
+              [(nzVisible)]="isVisible_add"
               nzOkText="添加"
               nzTitle="厂商信息">
-      <form nz-form [formGroup]="manuForm" >
+      <form nz-form [formGroup]="manuAddForm" >
         <nz-form-item>
           <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">厂商编号</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmName" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmAddress" nz-input type="password">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmContact" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzFor="firmTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmTelephone" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('firmEmail')">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback [nzValidateStatus]="getFormControl('firmEmail')">
             <input formControlName="firmEmail" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
@@ -69,7 +69,7 @@
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table #nzTable  [nzPageSize]="10">
+      <nz-table #nzTable [nzPageSize]="pageSize" [(nzPageIndex)]="pageIndex">
         <thead nz-thead>
         <tr>
           <th nz-th><span>厂商编号</span></th>
@@ -82,19 +82,63 @@
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody>
+        <tbody nz-tbody *ngFor="let data of manuData">
         <tr nz-tbody-tr >
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td><a href="#">修改</a></td>
+          <td nz-td>{{data.firmNo}}</td>
+          <td nz-td>{{data.firmName}}</td>
+          <td nz-td>{{data.firmAddress}}</td>
+          <td nz-td>{{data.firmContact}}</td>
+          <td nz-td>{{data.firmTelephone}}</td>
+          <td nz-td>{{data.firmEmail}}</td>
+          <td nz-td>{{data.firmAddDate}}</td>
+          <td nz-td (click)="isVisible_modify = true;"><a>修改</a></td>
         </tr>
         </tbody>
       </nz-table>
+      <nz-modal (nzOnCancel)="isVisible_modify = false"
+                (nzOnOk)="modManu()"
+                [(nzVisible)]="isVisible_modify"
+                nzOkText="修改"
+                nzTitle="厂商信息">
+        <form nz-form [formGroup]="manuModForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">厂商编号</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="firmName" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="firmAddress" nz-input type="password">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="firmContact" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="firmTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="firmTelephone" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl_mod('firmEmail')" nzHasFeedback>
+              <input formControlName="firmEmail" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
     </nz-layout>
   </nz-layout>
 </nz-layout>
