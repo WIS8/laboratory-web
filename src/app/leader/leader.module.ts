@@ -4,9 +4,10 @@ import { RoomManagementComponent } from './room-management/room-management.compo
 import { ApplicationCheckManagementComponent } from './application-check-management/application-check-management.component';
 import { AccessManagementComponent } from './access-management/access-management.component';
 import { LeaderTopbarComponent } from './leader-topbar/leader-topbar.component';
+import { AddRoomPoppingWindowComponent } from './add-room-popping-window/add-room-popping-window.component';
 
 @NgModule({
-  declarations: [RoomManagementComponent, ApplicationCheckManagementComponent, AccessManagementComponent, LeaderTopbarComponent],
+  declarations: [RoomManagementComponent, ApplicationCheckManagementComponent, AccessManagementComponent, LeaderTopbarComponent, AddRoomPoppingWindowComponent],
   imports: [
     CommonModule
   ]

@@ -10,10 +10,16 @@ import {LeaderTopbarComponent} from './leader/leader-topbar/leader-topbar.compon
 
 const routes: Routes = [
   { path: '', component: LeaderTopbarComponent , data: {title: '领导管理'}},
-  { path: 'leader-room-management', component: RoomManagementComponent, data: { title: '库房管理'} },   // 库房管理
-  {path: 'leader-application-check-management', component: ApplicationCheckManagementComponent, data: { title: '申请管理'} },  // 申请管理
-  // {path: 'leader-access-management', component: AccessManagementComponent, data: { title: '权限管理'}} ,
-  {path: 'leader-access-management', component: AccessManagementComponent, data: { title: '权限管理'}} ,
+  { path: 'leader-room-management',
+    component: RoomManagementComponent,
+    data: { title: '库房管理'} },   // 库房管理
+  {path: 'leader-application-check-management',
+    component: ApplicationCheckManagementComponent,
+    data: { title: '申请管理'} },  // 申请管理
+  { path: 'leader-access-management',
+    component: AccessManagementComponent,
+    data: { title: '权限管理'}} ,
+
   {
     path: 'manu',
     component: ManufacturerManagementComponent,
