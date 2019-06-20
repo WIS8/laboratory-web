@@ -1,8 +1,8 @@
 <nz-layout class="layout">
-  <nz-header>
-    <app-leader-topbar></app-leader-topbar>
-  </nz-header>>
-  <nz-layout>
+  <!--<nz-header>-->
+    <!--<app-leader></app-leader>-->
+    <!--</nz-header>-->
+    <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
         <li nz-menu-item>
@@ -11,121 +11,96 @@
             <span>库房列表</span>
           </span>
         </li>
-        <li  (click)="isVisible = true;"
-
-             nz-menu-item >
+        <li  (click)="isVisible = true;" nz-menu-item >
           <span title>
             <i class="anticon anticon-plus"></i>
             <span>添加库房</span>
           </span>
         </li>
       </ul>
-
-
     </nz-sider>
     <nz-modal (nzOnCancel)="isVisible = false"
-
-              (nzOnOk)="addUser()"
-
+              (nzOnOk)="addRoom()"
               [(nzVisible)]="isVisible"
-
-              [nzOkLoading]="okLoading"
-
               nzOkText="添加"
-
-              nzTitle="驾驶员信息">
-
-      <form [formGroup]="userForm" nz-form>
-
+              nzTitle="库房信息">
+      <form nz-form [formGroup]="roomForm" >
         <nz-form-item>
-
-          <nz-form-label nzFor="employeeId" nzSm="4" nzXs="24">工号</nz-form-label>
-
+          <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">编号</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-
-            <nz-input-number formControlName="employeeId" id="employeeId"></nz-input-number>
-
+            <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
           </nz-form-control>
-
         </nz-form-item>
-
         <nz-form-item>
-
-          <nz-form-label nzFor="username" nzSm="4" nzXs="24">用户名</nz-form-label>
-
+          <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-
-            <input formControlName="username" nz-input type="text">
-
+            <input formControlName="firmName" nz-input type="text">
           </nz-form-control>
-
         </nz-form-item>
-
         <nz-form-item>
-
-          <nz-form-label nzFor="password" nzSm="4" nzXs="24">密码</nz-form-label>
-
+          <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-
-            <input formControlName="password" nz-input type="password">
-
+            <input formControlName="firmAddress" nz-input type="password">
           </nz-form-control>
-
         </nz-form-item>
-
         <nz-form-item>
-
-          <nz-form-label nzFor="name" nzSm="4" nzXs="24">姓名</nz-form-label>
-
+          <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-
-            <input formControlName="name" nz-input type="text">
-
+            <input formControlName="firmContact" nz-input type="text">
           </nz-form-control>
-
         </nz-form-item>
-
         <nz-form-item>
-
-          <nz-form-label nzFor="gender" nzSm="4" nzXs="24">性别</nz-form-label>
-
+          <nz-form-label nzFor="firmTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-
-            <nz-radio-group formControlName="gender" id="gender" nzName="radioGroup">
-
-              <label nz-radio nzValue="MAN">男</label>
-
-              <label nz-radio nzValue="WOMAN">女</label>
-
-            </nz-radio-group>
-
+            <input formControlName="firmTelephone" nz-input type="text">
           </nz-form-control>
-
         </nz-form-item>
-
         <nz-form-item>
-
-          <nz-form-label nzFor="age" nzSm="4" nzXs="24">年龄</nz-form-label>
-
-          <nz-form-control nzSm="18" nzXs="24">
-
-            <nz-input-number formControlName="age" id="age"></nz-input-number>
-
+          <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('firmEmail')">
+            <input formControlName="firmEmail" nz-input type="text">
           </nz-form-control>
-
         </nz-form-item>
-
       </form>
-
     </nz-modal>
-
     <nz-layout style="padding:0 24px 24px">
       <nz-breadcrumb style="margin:12px 0;">
-        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-        <nz-breadcrumb-item>List</nz-breadcrumb-item>
-        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+        <nz-breadcrumb-item>厂商管理</nz-breadcrumb-item>
+        <nz-breadcrumb-item>厂商查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <nz-content style="background:#fff; padding: 24px; min-height: 280px;">Content</nz-content>
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
+        <input #searchBox nz-input
+               placeholder="输入厂商编号进行搜索" type="text">
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon type="search"></i>
+      </ng-template>
+      <nz-table #nzTable  [nzPageSize]="10">
+        <thead nz-thead>
+        <tr>
+          <th nz-th><span>厂商编号</span></th>
+          <th nz-th><span>厂商名称</span></th>
+          <th nz-th><span>厂商地址</span></th>
+          <th nz-th><span>联系人</span></th>
+          <th nz-th><span>电话</span></th>
+          <th nz-th><span>邮箱</span></th>
+          <th nz-th><span>添加日期</span></th>
+          <th nz-th><span>操作</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody>
+        <tr nz-tbody-tr >
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td></td>
+          <td nz-td><a href="#">修改</a></td>
+        </tr>
+        </tbody>
+      </nz-table>
     </nz-layout>
   </nz-layout>
 </nz-layout>

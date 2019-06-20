@@ -7,34 +7,36 @@ import {RoomManagementComponent} from './leader/room-management/room-management.
 import {ApplicationCheckManagementComponent} from './leader/application-check-management/application-check-management.component';
 import {AccessManagementComponent} from './leader/access-management/access-management.component';
 import {LeaderTopbarComponent} from './leader/leader-topbar/leader-topbar.component';
+import {DeviceApplicationManagementComponent} from './leader/application-check-management/device-application-management/device-application-management.component';
+import {DisuseApplicationManagementComponent} from './leader/application-check-management/disuse-application-management/disuse-application-management.component';
+import {LeaderComponent} from './leader/leader.component';
 
 const routes: Routes = [
-  { path: '', component: LeaderTopbarComponent , data: {title: '领导管理'}},
-  { path: 'leader-room-management',
-    component: RoomManagementComponent,
-    data: { title: '库房管理'} },   // 库房管理
-  {path: 'leader-application-check-management',
-    component: ApplicationCheckManagementComponent,
-    data: { title: '申请管理'} },  // 申请管理
-  { path: 'leader-access-management',
-    component: AccessManagementComponent,
-    data: { title: '权限管理'}} ,
-
   {
-    path: 'manu',
-    component: ManufacturerManagementComponent,
-    children: []
+    path: '',
+    loadChildren: './leader/leader.module#LeaderModule',
+    // component: LeaderTopbarComponent,
+    // canLoad: [DriverAuthGuard]
   },
-  {
-    path: 'app',
-    component: ApplicationManagementComponent,
-    children: []
+  {path: 'leader',
+    loadChildren: './leader/leader.module#LeaderModule',
+    // canLoad: [XXXXGuard]
   },
-  {
-    path: 'mod',
-    component: ModelManagementComponent,
-    children: []
-  }
+  // {
+  //   path: 'manu',
+  //   component: ManufacturerManagementComponent,
+  //   children: []
+  // },
+  // {
+  //   path: 'app',
+  //   component: ApplicationManagementComponent,
+  //   children: []
+  // },
+  // {
+  //   path: 'mod',
+  //   component: ModelManagementComponent,
+  //   children: []
+  // }
   ];
 
 @NgModule({

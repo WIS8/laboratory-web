@@ -17,7 +17,9 @@ import {ManufacturerManagementComponent} from './staff/manufacturer-management/m
 import {ModelManagementComponent} from './staff/model-management/model-management.component';
 import {StaffTopbarComponent} from './staff/staff-topbar/staff-topbar.component';
 import {LeaderTopbarComponent} from './leader/leader-topbar/leader-topbar.component';
-
+import {DeviceApplicationManagementComponent} from './leader/application-check-management/device-application-management/device-application-management.component';
+import {DisuseApplicationManagementComponent} from './leader/application-check-management/disuse-application-management/disuse-application-management.component';
+import {LeaderComponent} from './leader/leader.component';
 registerLocaleData(zh);
 
 @NgModule({
@@ -27,10 +29,8 @@ registerLocaleData(zh);
     ManufacturerManagementComponent,
     ModelManagementComponent,
     StaffTopbarComponent,
-    RoomManagementComponent,
-    ApplicationCheckManagementComponent,
-    AccessManagementComponent,
-    LeaderTopbarComponent
+    LeaderComponent,
+    LeaderTopbarComponent,
   ],
   imports: [
     BrowserModule,
