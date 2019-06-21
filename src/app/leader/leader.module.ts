@@ -8,6 +8,9 @@ import { DisuseApplicationManagementComponent } from './application-check-manage
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {LeaderTopbarComponent} from './leader-topbar/leader-topbar.component';
+import {AppModule} from '../app.module';
+import {LeaderRoutingModule} from './leader-routing.module';
+import {LeaderComponent} from './leader.component';
 
 
 @NgModule({
@@ -15,11 +18,15 @@ import {LeaderTopbarComponent} from './leader-topbar/leader-topbar.component';
     RoomManagementComponent,
     ApplicationCheckManagementComponent,
     AccessManagementComponent,
-    // LeaderTopbarComponent,
+    LeaderComponent,
+    LeaderTopbarComponent,
     // DeviceApplicationManagementComponent,
     // DisuseApplicationManagementComponent,
   ],
   imports: [
+    // AppModule,
+    // LeaderTopbarComponent,
+    LeaderRoutingModule,
     CommonModule,
     NgZorroAntdModule,
     FormsModule,

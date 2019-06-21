@@ -18,10 +18,10 @@ const routes: Routes = [
     // component: LeaderTopbarComponent,
     // canLoad: [DriverAuthGuard]
   },
-  {path: 'leader',
-    loadChildren: './leader/leader.module#LeaderModule',
-    // canLoad: [XXXXGuard]
-  },
+  // {path: 'leader',
+  //   loadChildren: './leader/leader.module#LeaderModule',
+  //   // canLoad: [XXXXGuard]
+  // },
   // {
   //   path: 'manu',
   //   component: ManufacturerManagementComponent,

@@ -3,9 +3,11 @@ import {NgModule} from '@angular/core';
 import {DeviceApplicationManagementComponent} from './device-application-management/device-application-management.component';
 import {DisuseApplicationManagementComponent} from './disuse-application-management/disuse-application-management.component';
 import {ApplicationCheckManagementComponent} from './application-check-management.component';
+import {LeaderRoutingModule} from '../leader-routing.module';
+
 const routes: Routes = [
   {
-     path: '',
+     path: 'applicationCheck',
     // path: '',
      component: ApplicationCheckManagementComponent,
      // canActivate: [],
@@ -26,7 +28,9 @@ const routes: Routes = [
     DisuseApplicationManagementComponent,
   ],
   imports: [RouterModule.forChild(routes),
-    ApplicationCheckManagementRoutingModule, ],
+    LeaderRoutingModule,
+    ApplicationCheckManagementRoutingModule,
+  ],
   exports: [RouterModule]
 })
 export class ApplicationCheckManagementRoutingModule {

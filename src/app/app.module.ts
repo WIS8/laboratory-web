@@ -29,8 +29,8 @@ registerLocaleData(zh);
     ManufacturerManagementComponent,
     ModelManagementComponent,
     StaffTopbarComponent,
-    LeaderComponent,
-    LeaderTopbarComponent,
+  //  LeaderComponent,
+   // LeaderTopbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +41,9 @@ registerLocaleData(zh);
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
+  // exports: [
+  //   LeaderTopbarComponent,
+  // ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })

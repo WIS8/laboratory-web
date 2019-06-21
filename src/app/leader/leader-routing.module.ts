@@ -5,6 +5,7 @@ import {LeaderTopbarComponent} from './leader-topbar/leader-topbar.component';
 import {ApplicationCheckManagementComponent} from './application-check-management/application-check-management.component';
 import {AccessManagementComponent} from './access-management/access-management.component';
 import {LeaderComponent} from './leader.component';
+import {AppRoutingModule} from '../app-routing.module';
 
 const routes: Routes = [
   {
@@ -44,7 +45,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes),
+   // AppRoutingModule,
+  ],
   exports: [RouterModule]
 })
 export class LeaderRoutingModule {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-application-check-management',
   templateUrl: './application-check-management.component.html',

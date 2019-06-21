@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class AccessManagementComponent implements OnInit {
 
   constructor() { }
-
   ngOnInit() {
   }
-
 }
