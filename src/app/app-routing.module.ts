@@ -1,32 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ApplicationManagementComponent} from './staff/application-management/application-management.component';
-import {ManufacturerManagementComponent} from './staff/manufacturer-management/manufacturer-management.component';
-import {ModelManagementComponent} from './staff/model-management/model-management.component';
-import {StaffTopbarComponent} from './staff/staff-topbar/staff-topbar.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: StaffTopbarComponent,
-    children: []
-  },
-  {
-    path: 'manu',
-    component: ManufacturerManagementComponent,
-    children: []
-  },
-  {
-    path: 'app',
-    component: ApplicationManagementComponent,
-    children: []
-  },
-  {
-    path: 'mod',
-    component: ModelManagementComponent,
-    children: []
-  }
-  ];
+  { path: '', loadChildren: './staff/staff.module#StaffModule'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

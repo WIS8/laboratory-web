@@ -13,7 +13,7 @@ import {
   styleUrls: ['./model-management.component.css']
 })
 export class ModelManagementComponent implements OnInit {
-  isVisible = false;
+  // isVisible = false;
   constructor() { }
 
   ngOnInit() {

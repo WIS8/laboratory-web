@@ -8,30 +8,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import {ApplicationManagementComponent} from './staff/application-management/application-management.component';
-import {ManufacturerManagementComponent} from './staff/manufacturer-management/manufacturer-management.component';
-import {ModelManagementComponent} from './staff/model-management/model-management.component';
-import {StaffTopbarComponent} from './staff/staff-topbar/staff-topbar.component';
-
+import {StaffModule} from './staff/staff.module';
 
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ApplicationManagementComponent,
-    ManufacturerManagementComponent,
-    ModelManagementComponent,
-    StaffTopbarComponent
+    AppComponent
   ],
   imports: [
+    StaffModule,
     BrowserModule,
     AppRoutingModule,
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
