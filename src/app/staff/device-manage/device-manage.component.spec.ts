@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StaffTopbarComponent } from './staff-topbar.component';
+import { DeviceManageComponent } from './device-manage.component';
 
-describe('StaffTopbarComponent', () => {
-  let component: StaffTopbarComponent;
-  let fixture: ComponentFixture<StaffTopbarComponent>;
+describe('DeviceManageComponent', () => {
+  let component: DeviceManageComponent;
+  let fixture: ComponentFixture<DeviceManageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffTopbarComponent ]
+      declarations: [ DeviceManageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StaffTopbarComponent);
+    fixture = TestBed.createComponent(DeviceManageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

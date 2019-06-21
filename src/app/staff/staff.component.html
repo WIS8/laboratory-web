@@ -1,0 +1,22 @@
+<nz-layout class="layout">
+  <nz-header>
+    <div class="logo"></div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+      <li nz-menu-item>个人信息</li>
+      <li nz-menu-item [routerLinkActive]="['ant-menu-item-selected']">
+        <a [routerLink]="['/ManufacturerManage']">厂商管理</a>
+      </li>
+      <li nz-menu-item [routerLinkActive]="['ant-menu-item-selected']">
+        <a [routerLink]="['/DeviceManage']">设备管理</a>
+      </li>
+      <li nz-menu-item [routerLinkActive]="['ant-menu-item-selected']">
+        <a [routerLink]="['/ModelManage']">型号管理</a>
+      </li>
+      <li nz-menu-item [routerLinkActive]="['ant-menu-item-selected']">
+        <a [routerLink]="['/ApplicationManage']">申请管理</a>
+      </li>
+    </ul>
+  </nz-header>
+  <router-outlet></router-outlet>
+</nz-layout>
+
