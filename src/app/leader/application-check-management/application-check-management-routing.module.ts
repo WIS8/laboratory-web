@@ -11,14 +11,19 @@ const routes: Routes = [
     // path: '',
      component: ApplicationCheckManagementComponent,
      // canActivate: [],
-    children: [
-      {path: 'deviceApplicationCheck',
-        component: DeviceApplicationManagementComponent
-      },
-      {path: 'disuseApplicationCheck',
-        component: DisuseApplicationManagementComponent
-      },
-    ]
+    // children: [
+    //   {  path: 'deviceApplicationCheck',
+    //     component: DeviceApplicationManagementComponent
+    //   },
+    //   {  path: 'disuseApplicationCheck',
+    //     component: DisuseApplicationManagementComponent
+    //   },
+    //   {
+    //     path: '',
+    //     redirectTo: 'deviceApplicationCheck',
+    //     component: DeviceApplicationManagementComponent,
+    //   }
+    // ]
   }
 ];
 @NgModule({
