@@ -6,6 +6,8 @@ import {
 } from '@angular/forms';
 import {NzMessageService} from 'ng-zorro-antd';
 import {Firm} from '../../shared/domain/Firm';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 
 
 @Component({
@@ -21,6 +23,7 @@ export class ManufacturerManagementComponent implements OnInit {
   isVisible_modify = false;    // 修改隐藏
   pageIndex = 1;
   pageSize = 20;
+  searchTerms = new BehaviorSubject<string>('');  // 查询
 
   firms: Firm[] = [];
 
@@ -74,9 +77,16 @@ export class ManufacturerManagementComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => {
+        this.findAll();
+      }
+    );
   }
 
-  addManu(): void {
+  addManu(): void {       // 增加厂商
       if (this.manuAddForm.valid) {
         const firm: Firm = {
           firmNo: this.manuAddForm.get('firmNo').value,
@@ -93,12 +103,18 @@ export class ManufacturerManagementComponent implements OnInit {
       }
     }
 
-  modManu(): void {
+  modManu(): void {       // 修改厂商
     if (this.manuModForm.valid) {
       this._message.create('success', '修改成功');
       this.isVisible_modify = false;
     } else {
       this._message.create('warning', '填写数据有误');
+    }
+  }
+
+  findAll(reset: boolean = false): void {
+    if (reset) {
+      this.pageIndex = 1;
     }
   }
 
