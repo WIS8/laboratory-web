@@ -1,3 +1,130 @@
 <nz-layout class="layout">
-
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item nzSelected="true">
+          <span title><i class="anticon anticon-search"></i>型号查询</span>
+        </li>
+        <li nz-menu-item (click)="isVisible_add = true;">
+          <span title><i class="anticon anticon-plus"></i>添加型号</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-modal (nzOnCancel)="isVisible_add = false"
+              (nzOnOk)="addMod();"
+              [(nzVisible)]="isVisible_add"
+              nzOkText="添加"
+              nzTitle="型号信息">
+      <form nz-form [formGroup]="modAddForm" >
+        <nz-form-item>
+          <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input  formControlName="modelNo" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label  nzFor="modelName" nzSm="4" nzXs="24">型号名称</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input formControlName="modelName" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label  nzFor="modelType" nzSm="4" nzXs="24">类别</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input formControlName="modelType" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="modelNorm" nzSm="4" nzXs="24">规格</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input formControlName="modelNorm" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <nz-input-number nzFor="modelPrice" formControlName="modelPrice" id="modelPrice"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-modal>
+    <nz-layout style="padding:0 24px 24px">
+      <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item>型号管理</nz-breadcrumb-item>
+        <nz-breadcrumb-item>型号查询</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
+        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
+               placeholder="输入型号编号进行搜索" type="text">
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon type="search"></i>
+      </ng-template>
+      <nz-table (nzPageIndexChange)="findAll()"
+                (nzPageSizeChange)="findAll(true)"
+                [(nzPageIndex)]="pageIndex"
+                [nzPageSize]="pageSize"
+                [nzFrontPagination]="false">
+        <thead nz-thead>
+        <tr>
+          <th nz-th><span>型号编号</span></th>
+          <th nz-th><span>型号名称</span></th>
+          <th nz-th><span>类别</span></th>
+          <th nz-th><span>规格</span></th>
+          <th nz-th><span>价格</span></th>
+          <th nz-th><span>操作</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody-tr *ngFor="let data of modData">
+        <tr nz-tbody-tr >
+          <td nz-td>{{data.modelNo}}</td>
+          <td nz-td>{{data.modelName}}</td>
+          <td nz-td>{{data.modelType}}</td>
+          <td nz-td>{{data.modelNorm}}</td>
+          <td nz-td>{{data.modelPrice}}</td>
+          <td nz-td (click)="isVisible_modify = true;modModSet(data)"><a>修改</a></td>
+        </tr>
+        </tbody>
+      </nz-table>
+      <nz-modal (nzOnCancel)="isVisible_modify = false"
+                (nzOnOk)="modMod()"
+                [(nzVisible)]="isVisible_modify"
+                nzOkText="修改"
+                nzTitle="厂商信息">
+        <form nz-form [formGroup]="modModForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input  formControlName="modelNo" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="modelName" nzSm="4" nzXs="24">型号名称</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="modelName" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="modelType" nzSm="4" nzXs="24">类别</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="modelType" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="modelNorm" nzSm="4" nzXs="24">规格</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="modelNorm" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-input-number nzFor="modelPrice" formControlName="modelPrice" id="modelPrice"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+    </nz-layout>
+  </nz-layout>
 </nz-layout>
+

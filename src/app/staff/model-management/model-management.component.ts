@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
   FormGroup,
   Validators,
-  FormControl
+  FormControl,
 } from '@angular/forms';
+import {NzMessageService} from 'ng-zorro-antd';
+import {Model} from '../../shared/domain/Model';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 
 @Component({
@@ -13,10 +16,104 @@ import {
   styleUrls: ['./model-management.component.css']
 })
 export class ModelManagementComponent implements OnInit {
-  // isVisible = false;
-  constructor() { }
+  modAddForm: FormGroup;  // 表格
+  modModForm: FormGroup;
+  isVisible_add = false;    // 添加隐藏
+  isVisible_modify = false;    // 修改隐藏
+  pageIndex = 1;
+  pageSize = 20;
+  searchTerms = new BehaviorSubject<string>('');  // 查询
+
+  models: Model[] = [];
+
+  modData = [
+    {
+      modelNo: '1001',
+      modelName: '型号1',
+      modelType: '商用型',
+      modelNorm: '小',
+      modelPrice: '560',
+    },
+    {
+      modelNo: '1002',
+      modelName: '型号2',
+      modelType: '商用型',
+      modelNorm: '中',
+      modelPrice: '8888',
+    },
+    {
+      modelNo: '1003',
+      modelName: '型号3',
+      modelType: '实验型',
+      modelNorm: '大',
+      modelPrice: '56108',
+    }
+  ];
+
+  constructor(private _message: NzMessageService) {
+    this.modAddForm = new FormGroup({
+      modelNo: new FormControl('', [Validators.required]),
+      modelName: new FormControl('', [Validators.required]),
+      modelType: new FormControl('', [Validators.required]),
+      modelNorm: new FormControl('', [Validators.required]),
+      modelPrice: new FormControl('', [Validators.required]),
+    });
+    this.modModForm = new FormGroup({
+      modelNo: new FormControl('', [Validators.required]),
+      modelName: new FormControl('', [Validators.required]),
+      modelType: new FormControl('', [Validators.required]),
+      modelNorm: new FormControl('', [Validators.required]),
+      modelPrice: new FormControl('', [Validators.required]),
+    });
+  }
 
   ngOnInit() {
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => {
+        this.findAll();
+      }
+    );
   }
+
+  addMod(): void {       // 增加型号
+    if (this.modAddForm.valid) {
+      const model: Model = {
+        modelNo: this.modAddForm.get('modelNo').value,
+        modelName: this.modAddForm.get('modelName').value,
+        modelType: this.modAddForm.get('modelType').value,
+        modelNorm: this.modAddForm.get('modelNorm').value,
+        modelPrice: this.modAddForm.get('modelPrice').value,
+      };
+      // service here
+      this._message.create('success', '添加成功');
+      this.isVisible_add = false;
+    } else {
+      this._message.create('warning', '填写数据有误');
+    }
+  }
+
+  modMod(): void {       // 修改型号
+    if (this.modModForm.valid) {
+      // service here
+      this._message.create('success', '修改成功');
+      this.isVisible_modify = false;
+    } else {
+      this._message.create('warning', '填写数据有误');
+    }
+  }
+
+  findAll(reset: boolean = false): void {
+    if (reset) {
+      this.pageIndex = 1;
+    }
+    // service here
+  }
+
+  modModSet(model: Model): void {
+    this.modModForm.setValue(model);
+  }
+
 
 }
