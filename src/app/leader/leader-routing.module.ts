@@ -7,6 +7,8 @@ import {LeaderComponent} from './leader.component';
 
 import {DeviceApplicationManagementComponent} from './application-check-management/device-application-management/device-application-management.component';
 import {DisuseApplicationManagementComponent} from './application-check-management/disuse-application-management/disuse-application-management.component';
+import {StaffAccessListComponent} from './access-management/staff-access-list/staff-access-list.component';
+import {StaffAcessEditComponent} from './access-management/staff-access-edit/staff-acess-edit.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,14 @@ const routes: Routes = [
       {
         path: 'accessManage',
         component: AccessManagementComponent,
+        children: [
+          {  path: 'stafflist',
+            component: StaffAccessListComponent,
+          },
+          {  path: 'staffAccessEdit',
+            component: StaffAcessEditComponent,
+          },
+        ]
       },
          {path: '', redirectTo: 'applicationCheck', pathMatch: 'full'},
       ]

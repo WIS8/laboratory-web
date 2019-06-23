@@ -12,6 +12,9 @@ import {LeaderRoutingModule} from './leader-routing.module';
 import {LeaderComponent} from './leader.component';
 import {DeviceApplicationManagementComponent} from './application-check-management/device-application-management/device-application-management.component';
 import {DisuseApplicationManagementComponent} from './application-check-management/disuse-application-management/disuse-application-management.component';
+import { StaffAcessEditComponent } from './access-management/staff-access-edit/staff-acess-edit.component';
+import { StaffAccessListComponent } from './access-management/staff-access-list/staff-access-list.component';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +25,8 @@ import {DisuseApplicationManagementComponent} from './application-check-manageme
     LeaderTopbarComponent,
      DeviceApplicationManagementComponent,
      DisuseApplicationManagementComponent,
+     StaffAcessEditComponent,
+     StaffAccessListComponent,
   ],
   imports: [
     // AppModule,
