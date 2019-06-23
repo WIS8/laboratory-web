@@ -60,11 +60,14 @@
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table (nzPageIndexChange)="findAll()"
+      <nz-table [nzData]="modData"
+                (nzPageIndexChange)="findAll()"
                 (nzPageSizeChange)="findAll(true)"
                 [(nzPageIndex)]="pageIndex"
                 [nzPageSize]="pageSize"
-                [nzFrontPagination]="false">
+                [nzFrontPagination]="false"
+                [nzLoading]="loading"
+                [nzTotal]="total">
         <thead nz-thead>
         <tr>
           <th nz-th><span>型号编号</span></th>
@@ -117,7 +120,7 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格</nz-form-label>
+            <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格(元)</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
               <nz-input-number nzFor="modelPrice" formControlName="modelPrice" id="modelPrice"></nz-input-number>
             </nz-form-control>

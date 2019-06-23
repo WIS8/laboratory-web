@@ -8,6 +8,8 @@ import { ManufacturerManagementComponent } from './manufacturer-management/manuf
 import { ModelManagementComponent } from './model-management/model-management.component';
 import { ApplicationManagementComponent } from './application-management/application-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApplicationSearchComponent } from './application-management/application-search/application-search.component';
+import { ApplicationModComponent } from './application-management/application-mod/application-mod.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ManufacturerManagementComponent,
     ModelManagementComponent,
     ApplicationManagementComponent,
+    ApplicationSearchComponent,
+    ApplicationModComponent,
   ],
   imports: [
     StaffRoutingModule,

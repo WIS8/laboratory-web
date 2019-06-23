@@ -22,6 +22,8 @@ export class ModelManagementComponent implements OnInit {
   isVisible_modify = false;    // 修改隐藏
   pageIndex = 1;
   pageSize = 20;
+  loading = true;    //  加载状态
+  total = 0;    // 当前总数据，在服务器渲染时需要传入
   searchTerms = new BehaviorSubject<string>('');  // 查询
 
   models: Model[] = [];
@@ -108,6 +110,7 @@ export class ModelManagementComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
+    this.loading = false;     //  暂时使用 需要修改
     // service here
   }
 

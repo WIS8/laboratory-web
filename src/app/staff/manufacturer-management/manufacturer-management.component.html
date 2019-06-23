@@ -66,11 +66,14 @@
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table (nzPageIndexChange)="findAll()"
+      <nz-table [nzData]="manuData"
+                (nzPageIndexChange)="findAll()"
                 (nzPageSizeChange)="findAll(true)"
                 [(nzPageIndex)]="pageIndex"
                 [nzPageSize]="pageSize"
-                [nzFrontPagination]="false">
+                [nzFrontPagination]="false"
+                [nzLoading]="loading"
+                [nzTotal]="total">
         <thead nz-thead>
           <tr>
             <th nz-th><span>厂商编号</span></th>
