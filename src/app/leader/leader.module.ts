@@ -13,7 +13,7 @@ import {LeaderComponent} from './leader.component';
 import {DeviceApplicationManagementComponent} from './application-check-management/device-application-management/device-application-management.component';
 import {DisuseApplicationManagementComponent} from './application-check-management/disuse-application-management/disuse-application-management.component';
 import { StaffAcessEditComponent } from './access-management/staff-access-edit/staff-acess-edit.component';
-import { StaffAccessListComponent } from './access-management/staff-access-list/staff-access-list.component';
+import { RoomAccessEditComponent } from './access-management/room-access-edit/room-access-edit.component';
 
 
 @NgModule({
@@ -26,7 +26,7 @@ import { StaffAccessListComponent } from './access-management/staff-access-list/
      DeviceApplicationManagementComponent,
      DisuseApplicationManagementComponent,
      StaffAcessEditComponent,
-     StaffAccessListComponent,
+     RoomAccessEditComponent,
   ],
   imports: [
     // AppModule,

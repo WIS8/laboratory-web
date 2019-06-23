@@ -26,51 +26,51 @@
               nzTitle="库房信息">
       <form nz-form [formGroup]="roomForm" >
         <nz-form-item>
-          <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">编号</nz-form-label>
+          <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">编号</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-            <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
+            <nz-input-number nzFor="roomNo" formControlName="roomNo" id="roomNo"></nz-input-number>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
+          <nz-form-label  nzFor="roomName" nzSm="4" nzXs="24">库房名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="firmName" nz-input type="text">
+            <input formControlName="roomName" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
+          <nz-form-label  nzFor="roomAddress" nzSm="4" nzXs="24">库房地址</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="firmAddress" nz-input type="password">
+            <input formControlName="roomAddress" nz-input type="password">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
+          <nz-form-label nzFor="roomContact" nzSm="4" nzXs="24">联系人</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="firmContact" nz-input type="text">
+            <input formControlName="roomContact" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="firmTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
+          <nz-form-label nzFor="roomTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="firmTelephone" nz-input type="text">
+            <input formControlName="roomTelephone" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="firmEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('firmEmail')">
-            <input formControlName="firmEmail" nz-input type="text">
+          <nz-form-label nzFor="roomEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('roomEmail')">
+            <input formControlName="roomEmail" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
       </form>
     </nz-modal>
     <nz-layout style="padding:0 24px 24px">
       <nz-breadcrumb style="margin:12px 0;">
-        <nz-breadcrumb-item>厂商管理</nz-breadcrumb-item>
-        <nz-breadcrumb-item>厂商查询</nz-breadcrumb-item>
+        <nz-breadcrumb-item>库房管理</nz-breadcrumb-item>
+        <nz-breadcrumb-item>库房查询</nz-breadcrumb-item>
       </nz-breadcrumb>
       <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
         <input #searchBox nz-input
-               placeholder="输入厂商编号进行搜索" type="text">
+               placeholder="输入库房编号进行搜索" type="text">
       </nz-input-group>
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
@@ -78,9 +78,9 @@
       <nz-table #nzTable  [nzPageSize]="10">
         <thead nz-thead>
         <tr>
-          <th nz-th><span>厂商编号</span></th>
-          <th nz-th><span>厂商名称</span></th>
-          <th nz-th><span>厂商地址</span></th>
+          <th nz-th><span>库房编号</span></th>
+          <th nz-th><span>库房名称</span></th>
+          <th nz-th><span>库房地址</span></th>
           <th nz-th><span>联系人</span></th>
           <th nz-th><span>电话</span></th>
           <th nz-th><span>邮箱</span></th>
