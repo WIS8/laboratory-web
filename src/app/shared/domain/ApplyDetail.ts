@@ -1,5 +1,5 @@
 
-export interface Interface {
+export interface ApplyDetail {
 
   applyNo: string;
 

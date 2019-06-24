@@ -13,7 +13,6 @@ import {StaffAcessEditComponent} from './access-management/staff-access-edit/sta
 const routes: Routes = [
   {
     path: '',
-
     component: LeaderComponent,
     // canActivate: [AdminAuthGuard],
     children: [
@@ -30,6 +29,11 @@ const routes: Routes = [
           {  path: 'disuseApplicationCheck',
             component: DisuseApplicationManagementComponent
           },
+          {
+            path: '',
+            redirectTo: 'disuseApplicationCheck',
+            component: DisuseApplicationManagementComponent,
+          },
         ]
       },
       {
@@ -45,6 +49,11 @@ const routes: Routes = [
           },
           {  path: 'staffAccessEdit',
             component: StaffAcessEditComponent,
+          },
+          {
+            path: '',
+            redirectTo: 'roomAccessEdit',
+            component: RoomAccessEditComponent,
           },
         ]
       },

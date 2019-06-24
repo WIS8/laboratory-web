@@ -6,25 +6,25 @@ import {ApplicationCheckManagementComponent} from './application-check-managemen
 import {LeaderRoutingModule} from '../leader-routing.module';
 
 const routes: Routes = [
-  {
-     path: 'applicationCheck',
-    // path: '',
-     component: ApplicationCheckManagementComponent,
-     // canActivate: [],
-    // children: [
-    //   {  path: 'deviceApplicationCheck',
-    //     component: DeviceApplicationManagementComponent
-    //   },
-    //   {  path: 'disuseApplicationCheck',
-    //     component: DisuseApplicationManagementComponent
-    //   },
-    //   {
-    //     path: '',
-    //     redirectTo: 'deviceApplicationCheck',
-    //     component: DeviceApplicationManagementComponent,
-    //   }
-    // ]
-  }
+  // {
+  //    path: 'applicationCheck',
+  //   // path: '',
+  //    component: ApplicationCheckManagementComponent,
+  //    // canActivate: [],
+  //   // children: [
+  //   //   {  path: 'deviceApplicationCheck',
+  //   //     component: DeviceApplicationManagementComponent
+  //   //   },
+  //   //   {  path: 'disuseApplicationCheck',
+  //   //     component: DisuseApplicationManagementComponent
+  //   //   },
+  //   //   {
+  //   //     path: '',
+  //   //     redirectTo: 'deviceApplicationCheck',
+  //   //     component: DeviceApplicationManagementComponent,
+  //   //   }
+  //   // ]
+  // }
 ];
 @NgModule({
   declarations: [

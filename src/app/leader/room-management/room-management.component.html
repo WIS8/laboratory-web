@@ -6,12 +6,9 @@
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
         <li nz-menu-item>
-          <span title>
-            <i class="anticon anticon-home"></i>
-            <span>库房列表</span>
-          </span>
+          <span title><i class="anticon anticon-home"></i>库房列表</span>
         </li>
-        <li  (click)="isVisible = true;" nz-menu-item >
+        <li  (click)="isVisibleAdd = true;" nz-menu-item >
           <span title>
             <i class="anticon anticon-plus"></i>
             <span>添加库房</span>
@@ -19,48 +16,55 @@
         </li>
       </ul>
     </nz-sider>
-    <nz-modal (nzOnCancel)="isVisible = false"
+    <nz-modal (nzOnCancel)="isVisibleAdd = false"
               (nzOnOk)="addRoom()"
-              [(nzVisible)]="isVisible"
+              [(nzVisible)]="isVisibleAdd"
               nzOkText="添加"
               nzTitle="库房信息">
-      <form nz-form [formGroup]="roomForm" >
+      <form nz-form [formGroup]="roomAddForm" >
         <nz-form-item>
-          <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">编号</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">库房编号</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <nz-input-number nzFor="roomNo" formControlName="roomNo" id="roomNo"></nz-input-number>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label  nzFor="roomName" nzSm="4" nzXs="24">库房名称</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="roomName" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label  nzFor="roomAddress" nzSm="4" nzXs="24">库房地址</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="roomAddress" nz-input type="password">
+          <nz-form-label  nzFor="roomType" nzSm="4" nzXs="24">库房类型</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <nz-select formControlName="roomType" [nzSize]="'default'">
+              <nz-option [nzLabel]="'存储室'" [nzValue]="'common'"></nz-option>
+              <nz-option [nzLabel]="'实验室'" [nzValue]="'urgent'"></nz-option>
+              <nz-option [nzLabel]="'其他'" [nzValue]="'urgent'"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="roomContact" nzSm="4" nzXs="24">联系人</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="roomContact" nz-input type="text">
+          <nz-form-label nzFor="roomState" nzSm="4" nzXs="24">库房状态</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <nz-select formControlName="roomState" [nzSize]="'default'">
+              <nz-option [nzLabel]="'可用'" [nzValue]="'common'"></nz-option>
+              <nz-option [nzLabel]="'弃用'" [nzValue]="'urgent'"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="roomTelephone" nzSm="4" nzXs="24">电话</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24">
-            <input formControlName="roomTelephone" nz-input type="text">
+          <nz-form-label nzFor="roomAddress" nzSm="4" nzXs="24">库房地址</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input formControlName="roomAddress" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="roomEmail" nzSm="4" nzXs="24">邮箱</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" [nzValidateStatus]="getFormControl('roomEmail')">
-            <input formControlName="roomEmail" nz-input type="text">
-          </nz-form-control>
-        </nz-form-item>
+        <!--<nz-form-item>-->
+          <!--<nz-form-label nzFor="roomAddDate" nzSm="4" nzXs="24">库房添加时间</nz-form-label>-->
+          <!--<nz-form-control nzSm="18" nzXs="24" nzHasFeedback>-->
+            <!--<input formControlName="roomAddDate" nz-input type="text">-->
+          <!--</nz-form-control>-->
+        <!--</nz-form-item>-->
       </form>
     </nz-modal>
     <nz-layout style="padding:0 24px 24px">
@@ -68,39 +72,102 @@
         <nz-breadcrumb-item>库房管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>库房查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
-        <input #searchBox nz-input
+
+      <!--<nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">-->
+        <!--<input #searchBox nz-input-->
+               <!--placeholder="输入库房编号进行搜索" type="text">-->
+      <!--</nz-input-group>-->
+
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">
+        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
                placeholder="输入库房编号进行搜索" type="text">
       </nz-input-group>
+
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table #nzTable  [nzPageSize]="10">
+      <nz-table [nzData]="roomData"
+                (nzPageIndexChange)="findAll()"
+                (nzPageSizeChange)="findAll(true)"
+                [(nzPageIndex)]="pageIndex"
+                [nzPageSize]="pageSize"
+                [nzFrontPagination]="false"
+                [nzLoading]="loading"
+                [nzTotal]="total">
         <thead nz-thead>
         <tr>
           <th nz-th><span>库房编号</span></th>
           <th nz-th><span>库房名称</span></th>
+          <th nz-th><span>库房类型</span></th>
+          <th nz-th><span>库房状态</span></th>
           <th nz-th><span>库房地址</span></th>
-          <th nz-th><span>联系人</span></th>
-          <th nz-th><span>电话</span></th>
-          <th nz-th><span>邮箱</span></th>
           <th nz-th><span>添加日期</span></th>
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody>
+        <tbody nz-tbody-tr *ngFor="let data of roomData">
         <tr nz-tbody-tr >
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td></td>
-          <td nz-td><a href="#">修改</a></td>
+          <td nz-td>{{data.roomNo}}</td>
+          <td nz-td>{{data.roomName}}</td>
+          <td nz-td>{{data.roomType}}</td>
+          <td nz-td>{{data.roomState}}</td>
+          <td nz-td>{{data.roomAddress}}</td>
+          <td nz-td>{{data.roomAddDate|date:'yyyy-M-d'}}</td>
+          <td nz-td (click)="isVisibleModify = true; modRoomSet(data)"><a>修改</a></td>
         </tr>
         </tbody>
       </nz-table>
+      <nz-modal (nzOnCancel)="isVisibleModify = false"
+                (nzOnOk)="modRoom()"
+                [(nzVisible)]="isVisibleModify"
+                nzOkText="修改"
+                nzTitle="库房信息">
+        <form nz-form [formGroup]="roomModForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">库房编号</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-input-number nzFor="roomNo" formControlName="roomNo" id="roomNo"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="roomName" nzSm="4" nzXs="24">库房名称</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="roomName" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="roomType" nzSm="4" nzXs="24">库房类型</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-select formControlName="roomType" [nzSize]="'default'">
+                <nz-option [nzLabel]="'存储室'" [nzValue]="'common'"></nz-option>
+                <nz-option [nzLabel]="'实验室'" [nzValue]="'urgent'"></nz-option>
+                <nz-option [nzLabel]="'其他'" [nzValue]="'urgent'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="roomState" nzSm="4" nzXs="24">库房状态</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-select formControlName="roomState" [nzSize]="'default'">
+                <nz-option [nzLabel]="'可用'" [nzValue]="'common'"></nz-option>
+                <nz-option [nzLabel]="'弃用'" [nzValue]="'urgent'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="roomAddress" nzSm="4" nzXs="24">库房地址</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="roomAddress" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+          <!--<nz-form-item>-->
+            <!--<nz-form-label nzFor="roomAddDate" nzSm="4" nzXs="24">库房添加时间</nz-form-label>-->
+            <!--<nz-form-control nzSm="18" nzXs="24" nzHasFeedback>-->
+              <!--<input formControlName="roomAddDate" nz-input type="text">-->
+            <!--</nz-form-control>-->
+          <!--</nz-form-item>-->
+        </form>
+      </nz-modal>
     </nz-layout>
   </nz-layout>
 </nz-layout>
