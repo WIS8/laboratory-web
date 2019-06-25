@@ -5,6 +5,9 @@ import {StaffComponent} from './staff.component';
 import {ModelManagementComponent} from './model-management/model-management.component';
 import {ManufacturerManagementComponent} from './manufacturer-management/manufacturer-management.component';
 import {ApplicationManagementComponent} from './application-management/application-management.component';
+import {ApplicationSearchComponent} from './application-management/application-search/application-search.component';
+import {ApplicationModComponent} from './application-management/application-mod/application-mod.component';
+import {ApplicationDetailComponent} from './application-management/application-detail/application-detail.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,7 +27,23 @@ const routes: Routes = [{
   },
   {
     path: 'ApplicationManage',
-    component: ApplicationManagementComponent
+    component: ApplicationManagementComponent,
+    children: [
+      {  path: 'search',
+        component: ApplicationSearchComponent,
+      },
+      {  path: 'model',
+        component: ApplicationModComponent
+      },
+      {  path: 'detail',
+        component: ApplicationDetailComponent
+      },
+     /* {
+        path: '',
+        redirectTo: 'search',
+        component: ApplicationSearchComponent,
+      },*/
+    ]
   },
   ]
 }];

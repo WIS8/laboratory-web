@@ -10,6 +10,7 @@ import { ApplicationManagementComponent } from './application-management/applica
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApplicationSearchComponent } from './application-management/application-search/application-search.component';
 import { ApplicationModComponent } from './application-management/application-mod/application-mod.component';
+import { ApplicationDetailComponent } from './application-management/application-detail/application-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ApplicationModComponent } from './application-management/application-mo
     ApplicationManagementComponent,
     ApplicationSearchComponent,
     ApplicationModComponent,
+    ApplicationDetailComponent,
   ],
   imports: [
     StaffRoutingModule,

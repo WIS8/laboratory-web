@@ -54,18 +54,17 @@ export class ModelManagementComponent implements OnInit {
 
   constructor(private _message: NzMessageService) {
     this.modAddForm = new FormGroup({
-      modelNo: new FormControl('', [Validators.required]),
-      modelName: new FormControl('', [Validators.required]),
-      modelType: new FormControl('', [Validators.required]),
-      modelNorm: new FormControl('', [Validators.required]),
-      modelPrice: new FormControl('', [Validators.required]),
+      modelName: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      modelType: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      modelNorm: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      modelPrice: new FormControl('', [Validators.required, Validators.max(99999999),
+        Validators.min(0)])
     });
     this.modModForm = new FormGroup({
-      modelNo: new FormControl('', [Validators.required]),
-      modelName: new FormControl('', [Validators.required]),
-      modelType: new FormControl('', [Validators.required]),
-      modelNorm: new FormControl('', [Validators.required]),
-      modelPrice: new FormControl('', [Validators.required]),
+      modelType: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      modelNorm: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      modelPrice: new FormControl('', [Validators.required, Validators.max(99999999),
+        Validators.min(0)])
     });
   }
 
@@ -82,7 +81,7 @@ export class ModelManagementComponent implements OnInit {
   addMod(): void {       // 增加型号
     if (this.modAddForm.valid) {
       const model: Model = {
-        modelNo: this.modAddForm.get('modelNo').value,
+        modelNo: '',
         modelName: this.modAddForm.get('modelName').value,
         modelType: this.modAddForm.get('modelType').value,
         modelNorm: this.modAddForm.get('modelNorm').value,
@@ -91,6 +90,7 @@ export class ModelManagementComponent implements OnInit {
       // service here
       this._message.create('success', '添加成功');
       this.isVisible_add = false;
+      this.modAddForm.reset();
     } else {
       this._message.create('warning', '填写数据有误');
     }
@@ -101,6 +101,7 @@ export class ModelManagementComponent implements OnInit {
       // service here
       this._message.create('success', '修改成功');
       this.isVisible_modify = false;
+      this.modModForm.reset();
     } else {
       this._message.create('warning', '填写数据有误');
     }
@@ -114,8 +115,8 @@ export class ModelManagementComponent implements OnInit {
     // service here
   }
 
-  modModSet(model: Model): void {
-    this.modModForm.setValue(model);
+  modModSet(data: any): void {
+    this.modModForm.patchValue(data);
   }
 
 

@@ -61,20 +61,17 @@ export class ManufacturerManagementComponent implements OnInit {
 
     constructor(private _message: NzMessageService) {
       this.manuAddForm = new FormGroup({
-        firmNo: new FormControl('', [Validators.required]),
-        firmName: new FormControl('', [Validators.required]),
-        firmAddress: new FormControl('', [Validators.required]),
-        firmContact: new FormControl('', [Validators.required]),
-        firmTelephone: new FormControl('', [Validators.required]),
-        firmEmail: new FormControl('', [Validators.email, Validators.required])
+        firmName: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        firmAddress: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        firmContact: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+        firmTelephone: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        firmEmail: new FormControl('', [Validators.email, Validators.required, Validators.maxLength(50)])
       });
       this.manuModForm = new FormGroup({
-        firmNo: new FormControl('', [Validators.required]),
-        firmName: new FormControl('', [Validators.required]),
-        firmAddress: new FormControl('', [Validators.required]),
-        firmContact: new FormControl('', [Validators.required]),
-        firmTelephone: new FormControl('', [Validators.required]),
-        firmEmail: new FormControl('', [Validators.email, Validators.required])
+        firmAddress: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+        firmContact: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+        firmTelephone: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        firmEmail: new FormControl('', [Validators.email, Validators.required, Validators.maxLength(50)])
       });
   }
 
@@ -91,7 +88,7 @@ export class ManufacturerManagementComponent implements OnInit {
   addManu(): void {       // 增加厂商
       if (this.manuAddForm.valid) {
         const firm: Firm = {
-          firmNo: this.manuAddForm.get('firmNo').value,
+          firmNo: 0,
           firmName: this.manuAddForm.get('firmName').value,
           firmAddress: this.manuAddForm.get('firmAddress').value,
           firmContact: this.manuAddForm.get('firmContact').value,
@@ -101,6 +98,7 @@ export class ManufacturerManagementComponent implements OnInit {
         // service here
         this._message.create('success', '添加成功');
         this.isVisible_add = false;
+        this.manuAddForm.reset();
       } else {
         this._message.create('warning', '填写数据有误');
       }
@@ -111,6 +109,7 @@ export class ManufacturerManagementComponent implements OnInit {
       // service here
       this._message.create('success', '修改成功');
       this.isVisible_modify = false;
+      this.manuModForm.reset();
     } else {
       this._message.create('warning', '填写数据有误');
     }
@@ -124,8 +123,8 @@ export class ManufacturerManagementComponent implements OnInit {
     // service here
   }
 
-  modManuSet(firm: Firm): void {    // 厂商修改表单预设
-    this.manuModForm.setValue(firm);
+  modManuSet(data: any): void {    // 厂商修改表单预设
+    this.manuModForm.patchValue(data);
   }
 
 

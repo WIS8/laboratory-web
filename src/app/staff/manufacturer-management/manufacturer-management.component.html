@@ -17,12 +17,6 @@
               nzTitle="厂商信息">
       <form nz-form [formGroup]="manuAddForm" >
         <nz-form-item>
-          <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">厂商编号</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-            <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
           <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="firmName" nz-input type="text">
@@ -106,21 +100,9 @@
                 nzTitle="厂商信息">
         <form nz-form [formGroup]="manuModForm" >
           <nz-form-item>
-            <nz-form-label  nzFor="firmNo" nzSm="4" nzXs="24">厂商编号</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <nz-input-number nzFor="firmNo" formControlName="firmNo" id="firmNo"></nz-input-number>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label  nzFor="firmName" nzSm="4" nzXs="24">厂商名称</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <input formControlName="firmName" nz-input type="text">
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
             <nz-form-label  nzFor="firmAddress" nzSm="4" nzXs="24">厂商地址</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <input formControlName="firmAddress" nz-input type="password">
+              <input formControlName="firmAddress" nz-input type="text">
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>

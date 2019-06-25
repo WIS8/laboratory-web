@@ -17,12 +17,6 @@
               nzTitle="型号信息">
       <form nz-form [formGroup]="modAddForm" >
         <nz-form-item>
-          <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-            <input  formControlName="modelNo" nz-input type="text">
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
           <nz-form-label  nzFor="modelName" nzSm="4" nzXs="24">型号名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="modelName" nz-input type="text">
@@ -41,7 +35,7 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格</nz-form-label>
+          <nz-form-label nzFor="modelPrice" nzSm="4" nzXs="24">价格（元）</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <nz-input-number nzFor="modelPrice" formControlName="modelPrice" id="modelPrice"></nz-input-number>
           </nz-form-control>
@@ -74,7 +68,7 @@
           <th nz-th><span>型号名称</span></th>
           <th nz-th><span>类别</span></th>
           <th nz-th><span>规格</span></th>
-          <th nz-th><span>价格</span></th>
+          <th nz-th><span>价格（元）</span></th>
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
@@ -93,20 +87,8 @@
                 (nzOnOk)="modMod()"
                 [(nzVisible)]="isVisible_modify"
                 nzOkText="修改"
-                nzTitle="厂商信息">
+                nzTitle="型号信息">
         <form nz-form [formGroup]="modModForm" >
-          <nz-form-item>
-            <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <input  formControlName="modelNo" nz-input type="text">
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label  nzFor="modelName" nzSm="4" nzXs="24">型号名称</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <input formControlName="modelName" nz-input type="text">
-            </nz-form-control>
-          </nz-form-item>
           <nz-form-item>
             <nz-form-label  nzFor="modelType" nzSm="4" nzXs="24">类别</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>

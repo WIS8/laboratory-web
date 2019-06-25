@@ -1,0 +1,98 @@
+<nz-layout class="layout">
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item routerLink="/ApplicationManage/search" nzSelected="true">
+          <span title><i class="anticon anticon-search"></i>申请单查询</span>
+        </li>
+        <li nz-menu-item routerLink="/ApplicationManage/model">
+          <span title><i class="anticon anticon-plus"></i>设备申请</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding:0 24px 24px">
+      <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item>申请管理</nz-breadcrumb-item>
+        <nz-breadcrumb-item>申请单查询</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
+        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
+               placeholder="输入申请单编号进行搜索" type="text">
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon type="search"></i>
+      </ng-template>
+      <nz-table  [nzData]="applyData"
+                 (nzPageIndexChange)="findAll()"
+                 (nzPageSizeChange)="findAll(true)"
+                 [(nzPageIndex)]="pageIndex"
+                 [nzPageSize]="pageSize"
+                 [nzFrontPagination]="false"
+                 [nzLoading]="loading"
+                 [nzTotal]="total">
+        <thead nz-thead>
+        <tr>
+          <th nz-th><span>申请单编号</span></th>
+          <th nz-th><span>申请类型</span></th>
+          <th nz-th><span>理由</span></th>
+          <th nz-th><span>申请日期</span></th>
+          <th nz-th><span>状态</span></th>
+          <th nz-th><span>更新日期</span></th>
+          <th nz-th><span>审查说明</span></th>
+          <th nz-th><span>操作</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody-tr *ngFor="let data of applyData">
+        <tr nz-tbody-tr >
+          <td nz-td><a routerLink="/ApplicationManage/detail">{{data.applyNo}}</a></td>
+          <td nz-td>{{data.applyType}}</td>
+          <td nz-td>
+            <nz-popover [nzTitle]="'理由:'">
+              <a nz-popover>详细内容</a>
+              <ng-template #nzTemplate>
+                {{data.applyReason}}
+              </ng-template>
+            </nz-popover>
+          </td>
+          <td nz-td>{{data.applyDate|date:'yyyy-M-d'}}</td>
+          <td nz-td>{{data.applyState}}</td>
+          <td nz-td>{{data.applyUpdateDate|date:'yyyy-M-d'}}</td>
+          <td nz-td>
+            <nz-popover [nzTitle]="'审查说明:'">
+              <a nz-popover>详细内容</a>
+              <ng-template #nzTemplate>
+                {{data.applyUpdateInfo}}
+              </ng-template>
+            </nz-popover>
+          </td>
+          <td nz-td (click)="isVisible_modify = true;modApplySet(data)"><a>修改</a></td>
+        </tr>
+        </tbody>
+      </nz-table>
+      <nz-modal (nzOnCancel)="isVisible_modify = false"
+                (nzOnOk)="modApply()"
+                [(nzVisible)]="isVisible_modify"
+                nzOkText="修改"
+                nzTitle="申请单信息">
+        <form nz-form [formGroup]="applyModForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="applyType" nzSm="4" nzXs="24">申请类型</nz-form-label>
+            <nz-form-control nz-col [nzSpan]="10">
+              <nz-select formControlName="applyType" [nzSize]="'default'">
+                <nz-option [nzLabel]="'普通'" [nzValue]="'普通'"></nz-option>
+                <nz-option [nzLabel]="'急需'" [nzValue]="'急需'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="applyReason" nzSm="4" nzXs="24">理由</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <textarea formControlName="applyReason" rows="5" cols="5" nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
+

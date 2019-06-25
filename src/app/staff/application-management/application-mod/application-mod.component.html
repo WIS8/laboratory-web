@@ -1,0 +1,128 @@
+<nz-layout class="layout">
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-menu-item routerLink="/ApplicationManage/search">
+          <span title><i class="anticon anticon-search"></i>申请单查询</span>
+        </li>
+        <li nz-menu-item routerLink="/ApplicationManage/model" nzSelected="true">
+          <span title><i class="anticon anticon-plus"></i>设备申请</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding:0 24px 24px">
+      <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item>申请管理</nz-breadcrumb-item>
+        <nz-breadcrumb-item>设备申请</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div nz-row>
+        <div nz-col nzSpan="22">
+          <button nz-button nzType="primary" (click)="addRow()">增加申请项</button>
+        </div>
+        <div nz-col nzSpan="2">
+          <button nz-button nzType="primary" (click)="isVisible_confirm = true">确认提交</button>
+        </div>
+      </div>
+      <br/>
+      <nz-table [nzData]="newApplyData">
+        <thead nz-thead>
+        <tr>
+          <th nz-th><span>型号编号</span></th>
+          <th nz-th><span>数量</span></th>
+          <th nz-th><span>单位</span></th>
+          <th nz-th><span>操作</span></th>
+        </tr>
+        </thead>
+        <tbody nz-tbody-tr *ngFor="let data of newApplyData">
+        <tr nz-tbody-tr >
+          <td nz-td>{{data.modelNo}}</td>
+          <td nz-td>{{data.applyDetailQuantity}}</td>
+          <td nz-td>{{data.applyDetailUnit}}</td>
+          <td nz-td>
+            <a (click)="isVisible_modify = true;modelNoTemp = modelNoSet(data.modelNo)">修改</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="deleteRow(data.modelNo)">删除</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+      <!-- 确认申请单 -->
+      <nz-modal (nzOnCancel)="isVisible_confirm = false"
+                (nzOnOk)="submitApply()"
+                [(nzVisible)]="isVisible_confirm"
+                nzOkText="确认"
+                nzTitle="申请单信息">
+        <form nz-form [formGroup]="applyForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="applyType" nzSm="4" nzXs="24">申请类型</nz-form-label>
+            <nz-form-control nz-col [nzSpan]="10">
+              <nz-select formControlName="applyType" [nzSize]="'default'">
+                <nz-option [nzLabel]="'普通'" [nzValue]="'common'"></nz-option>
+                <nz-option [nzLabel]="'急需'" [nzValue]="'urgent'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label  nzFor="applyReason" nzSm="4" nzXs="24">理由</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <textarea formControlName="applyReason" rows="5" cols="5" nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+      <!-- 修改申请表项 -->
+      <nz-modal (nzOnCancel)="isVisible_modify = false"
+                (nzOnOk)="detailApply(modelNoTemp)"
+                [(nzVisible)]="isVisible_modify"
+                nzOkText="修改"
+                nzTitle="申请表项信息">
+        <form nz-form [formGroup]="applyDetailForm" >
+          <nz-form-item>
+            <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
+            <nz-form-control nz-col [nzSpan]="10">
+              <nz-select nzShowSearch formControlName="modelNo"
+                         [nzSize]="'default'">
+                <nz-option [nzLabel]="'1001'" [nzValue]="'1001'"></nz-option>
+                <nz-option [nzLabel]="'1002'" [nzValue]="'1002'"></nz-option>
+                <nz-option [nzLabel]="'2852'" [nzValue]="'2852'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="applyDetailQuantity" nzSm="4" nzXs="24">数量</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-input-number formControlName="applyDetailQuantity" nz-input type="text"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="applyDetailUnit" nzSm="4" nzXs="24">单位</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="applyDetailUnit" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+      <!--
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <label>申请类型: </label>
+          <nz-select [(ngModel)]="applyType" style="width: 200px;">
+            <nz-option [nzLabel]="'普通'" [nzValue]="'common'"></nz-option>
+            <nz-option [nzLabel]="'急需'" [nzValue]="'urgent'"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <label>申请理由: </label>
+          <textarea rows="5" cols="5" nz-input id="applyReason"></textarea>
+        </div>
+        <div nz-col nzSpan="12">
+          <button nz-button nzType="primary" style="width: 100px;top:100px;left:15px" (click)="submitApply()">确认提交</button>
+        </div>
+      </div>
+      -->
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
+
