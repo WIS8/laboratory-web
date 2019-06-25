@@ -2,42 +2,35 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li nz-submenu>
-          <span title><i nz-icon type="user"></i>subnav 1</span>
-          <ul>
-            <li nz-menu-item>option1</li>
-            <li nz-menu-item>option2</li>
-            <li nz-menu-item>option3</li>
-            <li nz-menu-item>option4</li>
-          </ul>
+        <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="user"></i>
+            <a routerLink="DeviceQuery">设备查询</a>
+          </span>
         </li>
-        <li nz-submenu>
-          <span title><i nz-icon type="laptop"></i>subnav 2</span>
-          <ul>
-            <li nz-menu-item>option5</li>
-            <li nz-menu-item>option6</li>
-            <li nz-menu-item>option7</li>
-            <li nz-menu-item>option8</li>
-          </ul>
+        <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="notification"></i>
+            <a routerLink="DeviceRegister">录入设备</a>
+          </span>
         </li>
-        <li nz-submenu>
-          <span title><i nz-icon type="notification"></i>subnav 3</span>
-          <ul>
-            <li nz-menu-item>option9</li>
-            <li nz-menu-item>option10</li>
-            <li nz-menu-item>option11</li>
-            <li nz-menu-item>option12</li>
-          </ul>
+        <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="notification"></i>
+            <a routerLink="DeviceRepair">报修设备</a>
+          </span>
+        </li>
+        <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="notification"></i>
+            <a routerLink="DeviceScrap">报废设备</a>
+          </span>
+        </li>
+        <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+          <span title><i nz-icon type="notification"></i>
+            <a routerLink="DeviceAnalyse">设备统计</a>
+          </span>
         </li>
       </ul>
     </nz-sider>
     <nz-layout style="padding:0 24px 24px">
-      <nz-breadcrumb style="margin:16px 0;">
-        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-        <nz-breadcrumb-item>List</nz-breadcrumb-item>
-        <nz-breadcrumb-item>App</nz-breadcrumb-item>
-      </nz-breadcrumb>
-      <nz-content style="background:#fff; padding: 24px; min-height: 280px;">Content</nz-content>
+      <router-outlet></router-outlet>
     </nz-layout>
   </nz-layout>
 </nz-layout>

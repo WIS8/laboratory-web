@@ -5,6 +5,11 @@ import {StaffComponent} from './staff.component';
 import {ModelManagementComponent} from './model-management/model-management.component';
 import {ManufacturerManagementComponent} from './manufacturer-management/manufacturer-management.component';
 import {ApplicationManagementComponent} from './application-management/application-management.component';
+import {DeviceQueryComponent} from './device-manage/device-query/device-query.component';
+import {DeviceRegisterComponent} from './device-manage/device-register/device-register.component';
+import {DeviceScrapComponent} from './device-manage/device-scrap/device-scrap.component';
+import {DeviceAnalyseComponent} from './device-manage/device-analyse/device-analyse.component';
+import {DeviceRepairComponent} from './device-manage/device-repair/device-repair.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +21,34 @@ const routes: Routes = [{
   },
   {
     path: 'DeviceManage',
-    component: DeviceManageComponent
+    component: DeviceManageComponent,
+    children: [
+      {
+        path: 'DeviceQuery',
+        component: DeviceQueryComponent
+      },
+      {
+        path: 'DeviceRegister',
+        component: DeviceRegisterComponent
+      },
+      {
+        path: 'DeviceRepair',
+        component: DeviceRepairComponent
+      },
+      {
+        path: 'DeviceScrap',
+        component: DeviceScrapComponent
+      },
+      {
+        path: 'DeviceAnalyse',
+        component: DeviceAnalyseComponent
+      },
+      {
+        path: '',
+        redirectTo: 'DeviceQuery',
+        pathMatch: 'prefix',
+      },
+    ]
   },
   {
     path: 'ModelManage',

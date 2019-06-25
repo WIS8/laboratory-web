@@ -1,0 +1,188 @@
+<nz-layout style="padding:0 24px 24px">
+  <nz-breadcrumb style="margin:12px 0;">
+    <nz-breadcrumb-item>主页</nz-breadcrumb-item>
+    <nz-breadcrumb-item>设备管理</nz-breadcrumb-item>
+    <nz-breadcrumb-item>设备查询</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
+    <input #searchBox nz-input
+           placeholder="输入设备编号进行搜索" type="text">
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon type="search"></i>
+  </ng-template>
+  <nz-table [nzPageSize]="pageSize" [(nzPageIndex)]="pageIndex" [nzShowSizeChanger]="true">
+    <thead nz-thead>
+    <tr>
+      <th nz-th><span>设备编号</span></th>
+      <th nz-th><span>型号名称</span></th>
+      <th nz-th><span>型号类别</span></th>
+      <th nz-th><span>型号规格</span></th>
+      <th nz-th><span>型号价格</span></th>
+      <th nz-th><span>设备状态</span></th>
+      <th nz-th><span>添加日期</span></th>
+      <th nz-th><span>操作</span></th>
+    </tr>
+    </thead>
+    <tbody nz-tbody-tr *ngFor="let data of DeviceData">
+    <tr nz-tbody-tr >
+      <td nz-td>{{data.DeviceNo}}</td>
+      <td nz-td>{{data.DeviceName}}</td>
+      <td nz-td>{{data.DeviceCategory}}</td>
+      <td nz-td>{{data.DeviceStandard}}</td>
+      <td nz-td>{{data.DevicePrice}}</td>
+      <td nz-td>{{data.DeviceStatus}}</td>
+      <td nz-td>{{data.DeviceAddDate|date:'yyyy-M-d'}}</td>
+      <td nz-td (click)="isVisible_modify = true;DeviceInfoMod(data)"><a>详情</a></td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <nz-modal (nzOnCancel)="isVisible_modify = false"
+            (nzOnOk)="DeviceInfo()"
+            [(nzVisible)]="isVisible_modify"
+            nzOkText="修改"
+            nzTitle="设备详情">
+    <form nz-form [formGroup]="DeviceInfoForm" >
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceNo" nzSm="4" nzXs="24">设备编号</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceNo" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceName" nzSm="4" nzXs="24">型号名称</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceName" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceCategory" nzSm="4" nzXs="24">型号类别</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceCategory" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceStandard" nzSm="4" nzXs="24">型号规格</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceStandard" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DevicePrice" nzSm="4" nzXs="24">型号价格</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DevicePrice" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceStatus" nzSm="4" nzXs="24">设备状态</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <div nz-col nzSpan="18">
+            <nz-select formControlName="DeviceStatus" [(ngModel)]="selectedValue" nzPlaceHolder="请选择">
+              <nz-option nzValue="正常" nzLabel="正常"></nz-option>
+              <nz-option nzValue="维修" nzLabel="维修"></nz-option>
+              <nz-option nzValue="报废" nzLabel="报废"></nz-option>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="2"></div>
+          <div nz-col nzSpan="4">
+            <button nz-button (click)="CheckSelect()" nzType="primary">详情</button>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceAddDate" nzSm="4" nzXs="24">添加日期</nz-form-label>
+        <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceAddDate" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+  <nz-modal (nzOnCancel)="isVisible_ToRepair = false"
+            (nzOnOk)="ToRepair()"
+            [(nzVisible)]="isVisible_ToRepair"
+            nzOkText="确认"
+            nzTitle="设备维修详情">
+    <form nz-form [formGroup]="DeviceRepairForm">
+    <nz-form-item>
+      <nz-form-label  nzFor="DeviceNo" nzSm="4" nzXs="24">设备编号</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceNo" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label  nzFor="DeviceRepairNo" nzSm="4" nzXs="24">报修编号</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceRepairNo" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label  nzFor="DeviceRepairPrice" nzSm="4" nzXs="24">修理费用</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceRepairPrice" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="DeviceRepairResult" nzSm="4" nzXs="24">修理结果</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceRepairResult" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="DeviceRepairDateStart" nzSm="4" nzXs="24">报修日期</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceRepairDateStart" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="DeviceRepairDateFinish" nzSm="4" nzXs="24">完成日期</nz-form-label>
+      <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+        <input formControlName="DeviceRepairDateFinish" nz-input type="text">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  </nz-modal>
+  <nz-modal (nzOnCancel)="isVisible_ToScrap = false"
+            (nzOnOk)="ToScrap()"
+            [(nzVisible)]="isVisible_ToScrap"
+            nzOkText="确认"
+            nzTitle="设备报废详情">
+    <form nz-form [formGroup]="DeviceScrapForm">
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceNo" nzSm="5" nzXs="24">设备编号</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceNo" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceScrapNo" nzSm="5" nzXs="24">报废编号</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceScrapNo" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label  nzFor="DeviceScrapDate" nzSm="5" nzXs="24">报废日期</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceScrapDate" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceScrapStatus" nzSm="5" nzXs="24">报废状态</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceScrapStatus" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceScrapDateNew" nzSm="5" nzXs="24">报废更新日期</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceScrapDateNew" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="DeviceScrapProcess" nzSm="5" nzXs="24">报废处理</nz-form-label>
+        <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+          <input formControlName="DeviceScrapProcess" nz-input type="text">
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+</nz-layout>

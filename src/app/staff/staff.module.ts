@@ -8,6 +8,12 @@ import { ManufacturerManagementComponent } from './manufacturer-management/manuf
 import { ModelManagementComponent } from './model-management/model-management.component';
 import { ApplicationManagementComponent } from './application-management/application-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeviceQueryComponent } from './device-manage/device-query/device-query.component';
+import {DeviceScrapComponent} from './device-manage/device-scrap/device-scrap.component';
+import {DeviceAnalyseComponent} from './device-manage/device-analyse/device-analyse.component';
+import {DeviceRepairComponent} from './device-manage/device-repair/device-repair.component';
+import {DeviceRegisterComponent} from './device-manage/device-register/device-register.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -16,6 +22,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ManufacturerManagementComponent,
     ModelManagementComponent,
     ApplicationManagementComponent,
+    DeviceQueryComponent,
+    DeviceRepairComponent,
+    DeviceRegisterComponent,
+    DeviceScrapComponent,
+    DeviceAnalyseComponent,
   ],
   imports: [
     StaffRoutingModule,
@@ -23,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxChartsModule,
   ]
 })
 export class StaffModule { }
