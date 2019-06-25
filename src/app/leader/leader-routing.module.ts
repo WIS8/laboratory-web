@@ -29,11 +29,11 @@ const routes: Routes = [
           {  path: 'disuseApplicationCheck',
             component: DisuseApplicationManagementComponent
           },
-          {
-            path: '',
-            redirectTo: 'disuseApplicationCheck',
-            component: DisuseApplicationManagementComponent,
-          },
+          // {
+          //   path: '',
+          //   redirectTo: 'deviceApplicationCheck',
+          //   component: DeviceApplicationManagementComponent,
+          // },
         ]
       },
       {

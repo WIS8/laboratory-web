@@ -6,15 +6,34 @@
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
         <!--deviceApplicationCheck-->
-        <li nz-menu-item routerLink="./deviceApplicationCheck" >
-          <span title><i class="anticon anticon-file-text" ></i>设备申请单</span>
+        <li nz-submenu >
+          <span title ><i nz-icon type="appstore"></i>设备申请单</span>
+          <ul>
+            <li nz-submenu>
+              <span title><i nz-icon nzType="clock-circle" nzTheme="outline"></i>未审核</span>
+              <ul>
+            <li nz-menu-item  routerLink="./deviceApplicationCheck" routerLinkActive="active">紧急申请</li>
+            <li nz-menu-item >普通申请</li>
+              </ul>
+            <li nz-menu-item   >
+              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已审核</span>
+          </ul>
         </li>
         <!--disuseApplicationCheck-->
-        <li nz-menu-item routerLink="./disuseApplicationCheck" routerLinkActive="active">
+        <li nz-submenu >
           <span title><i class="anticon anticon-bars" ></i>报废申请单</span>
+          <ul>
+            <li nz-menu-item routerLink="./disuseApplicationCheck" routerLinkActive="active">
+              <span title><i nz-icon nzType="clock-circle" nzTheme="outline"></i>未审核</span>
+
+            <li nz-menu-item>
+              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已审核</span>
+          </ul>
         </li>
       </ul>
     </nz-sider>
+    <nz-layout style="padding:0 24px 24px">
     <router-outlet></router-outlet>
+    </nz-layout>
   </nz-layout>
 </nz-layout>

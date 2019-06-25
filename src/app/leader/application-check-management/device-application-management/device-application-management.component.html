@@ -1,8 +1,131 @@
-<nz-layout style="padding:0 24px 24px">
   <nz-breadcrumb style="margin:12px 0;">
-    <nz-breadcrumb-item>leader</nz-breadcrumb-item>
-    <nz-breadcrumb-item>applicationCheck</nz-breadcrumb-item>
-    <nz-breadcrumb-item>device-application</nz-breadcrumb-item>
+    <nz-breadcrumb-item>领导管理</nz-breadcrumb-item>
+    <nz-breadcrumb-item>申请管理</nz-breadcrumb-item>
+    <nz-breadcrumb-item>设备申请</nz-breadcrumb-item>
   </nz-breadcrumb>
-  <nz-content style="background:#fff; padding: 24px; min-height: 280px;">  device-application-management works!</nz-content>
-</nz-layout>
+  <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">
+    <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
+           placeholder="输入申请单编号进行搜索" type="text">
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon type="search"></i>
+  </ng-template>
+  <nz-table  [nzData]="applyData"
+             (nzPageIndexChange)="findAll()"
+             (nzPageSizeChange)="findAll(true)"
+             [(nzPageIndex)]="pageIndex"
+             [nzPageSize]="pageSize"
+             [nzFrontPagination]="false"
+             [nzLoading]="loading"
+             [nzTotal]="total">
+    <thead nz-thead>
+    <tr>
+      <th nz-th><span>编号</span></th>
+      <th nz-th><span>申请类型</span></th>
+      <th nz-th><span>所申请设备</span></th>
+      <th nz-th><span>理由</span></th>
+      <th nz-th><span>申请日期</span></th>
+      <th nz-th><span>状态</span></th>
+      <th nz-th><span>更新日期</span></th>
+      <th nz-th><span>审查说明</span></th>
+      <th nz-th><span>审核操作</span></th>
+    </tr>
+    </thead>
+    <tbody nz-tbody-tr *ngFor="let data of applyData">
+    <tr nz-tbody-tr >
+      <td nz-td><a>{{data.applyNo}}</a></td>
+      <td nz-td>{{data.applyType}}</td>
+      <td nz-td (click)="isVisibleDetail= true" >
+        <nz-popover [nzTitle]="'申请设备:'">
+          <a nz-popover>设备详细内容</a>
+          <ng-template #nzTemplate>
+            {{data.applyDetail}}
+          </ng-template>
+        </nz-popover>
+      </td>
+      <td nz-td>
+        <nz-popover [nzTitle]="'理由:'">
+          <a nz-popover>详细内容</a>
+          <ng-template #nzTemplate>
+            {{data.applyReason}}
+          </ng-template>
+        </nz-popover>
+      </td>
+      <td nz-td>{{data.applyDate|date:'yyyy-M-d'}}</td>
+      <td nz-td>{{data.applyState}}</td>
+      <td nz-td>{{data.applyUpdateDate|date:'yyyy-M-d'}}</td>
+      <td nz-td (click)="isVisible= true; modApplySet(data)">
+        <nz-popover [nzTitle]="'审查说明:'">
+          <a nz-popover>点击添加/修改</a>
+          <ng-template #nzTemplate>
+            {{data.applyUpdateInfo}}
+          </ng-template>
+        </nz-popover>
+      </td>
+      <td nz-td><button nz-button nzType="primary" (click)="showConfirm()">审核通过</button>
+        &nbsp;
+     <button nz-button nzType="danger" (click)="showDeleteConfirm()">拒绝通过</button></td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <nz-modal (nzOnCancel)="isVisible = false"
+            (nzOnOk)="addUpdateInfo()"
+            [(nzVisible)]="isVisible"
+            [nzOkLoading]="okLoading"
+            nzOkText="保存"
+            nzTitle="申请信息">
+    <form [formGroup]="applyUpdateInfoForm" nz-form>
+
+      <nz-form-item>
+        <nz-form-label nzFor="applyUpdateInfo" nzSm="6" nzXs="24">申请审核说明</nz-form-label>
+          <textarea  formControlName='applyUpdateInfo' rows="10" nz-input [(ngModel)]="applyUpdateInfo"></textarea>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+
+  <nz-modal (nzOnCancel)="isVisibleDetail = false"
+            (nzOnOk)="isVisibleDetail = false"
+            nzWidth="810"
+            [(nzVisible)]="isVisibleDetail"
+            [nzOkLoading]="okLoading"
+            nzCancelText="关闭"
+            nzOkText="知晓"
+            nzTitle="申请详情设备信息">
+
+
+    <nz-descriptions nzTitle="申请详情" nzBordered [nzSize]="size">
+      <nz-descriptions-item nzTitle="申请员工编号">10161832</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="申请员工姓名">雷骏杰</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="申请员工类别">普通员工</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="所申请设备信息">
+        <nz-table nzTemplateMode>
+          <thead>
+          <tr>
+            <th>设备编号</th>
+            <th>设备名称</th>
+            <th>申请数量</th>
+          </tr>
+          </thead>
+          <tbody nz-tbody-tr *ngFor="let data of deviceDetailData">
+          <tr nz-tbody-tr >
+            <td nz-td><a>{{data.modelNo}}</a></td>
+            <td nz-td>{{data.modelName}}</td>
+            <td nz-td>{{data.applyDetailQuantity}}</td>
+          </tr>
+          </tbody>
+        </nz-table>
+          <!--<nz-list-->
+          <!--[nzDataSource]="deviceDetaildata"-->
+          <!--nzBordered-->
+          <!--nzSize="small"-->
+          <!--[nzRenderItem]="item"-->
+        <!--&gt;-->
+          <!--<ng-template #item let-item><nz-list-item [nzContent]="item"></nz-list-item></ng-template>-->
+        <!--</nz-list>-->
+      </nz-descriptions-item>
+
+
+    </nz-descriptions>
+
+  </nz-modal>

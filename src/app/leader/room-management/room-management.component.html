@@ -38,9 +38,9 @@
           <nz-form-label  nzFor="roomType" nzSm="4" nzXs="24">库房类型</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <nz-select formControlName="roomType" [nzSize]="'default'">
-              <nz-option [nzLabel]="'存储室'" [nzValue]="'common'"></nz-option>
-              <nz-option [nzLabel]="'实验室'" [nzValue]="'urgent'"></nz-option>
-              <nz-option [nzLabel]="'其他'" [nzValue]="'urgent'"></nz-option>
+              <nz-option [nzLabel]="'存储室'" [nzValue]="'存储室'"></nz-option>
+              <nz-option [nzLabel]="'实验室'" [nzValue]="'实验室'"></nz-option>
+              <nz-option [nzLabel]="'未定义'" [nzValue]="'未定义'"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -48,8 +48,9 @@
           <nz-form-label nzFor="roomState" nzSm="4" nzXs="24">库房状态</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <nz-select formControlName="roomState" [nzSize]="'default'">
-              <nz-option [nzLabel]="'可用'" [nzValue]="'common'"></nz-option>
-              <nz-option [nzLabel]="'弃用'" [nzValue]="'urgent'"></nz-option>
+              <nz-option [nzLabel]="'可用'" [nzValue]="'可用'"></nz-option>
+              <nz-option [nzLabel]="'禁用'" [nzValue]="'禁用'"></nz-option>
+              <nz-option [nzLabel]="'暂用'" [nzValue]="'暂用'"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -72,12 +73,10 @@
         <nz-breadcrumb-item>库房管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>库房查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-
       <!--<nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">-->
         <!--<input #searchBox nz-input-->
                <!--placeholder="输入库房编号进行搜索" type="text">-->
       <!--</nz-input-group>-->
-
       <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">
         <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
                placeholder="输入库房编号进行搜索" type="text">
@@ -139,9 +138,9 @@
             <nz-form-label  nzFor="roomType" nzSm="4" nzXs="24">库房类型</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
               <nz-select formControlName="roomType" [nzSize]="'default'">
-                <nz-option [nzLabel]="'存储室'" [nzValue]="'common'"></nz-option>
-                <nz-option [nzLabel]="'实验室'" [nzValue]="'urgent'"></nz-option>
-                <nz-option [nzLabel]="'其他'" [nzValue]="'urgent'"></nz-option>
+                <nz-option [nzLabel]="'存储室'" [nzValue]="'存储室'"></nz-option>
+                <nz-option [nzLabel]="'实验室'" [nzValue]="'实验室'"></nz-option>
+                <nz-option [nzLabel]="'未定义'" [nzValue]="'未定义'"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -149,8 +148,9 @@
             <nz-form-label nzFor="roomState" nzSm="4" nzXs="24">库房状态</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
               <nz-select formControlName="roomState" [nzSize]="'default'">
-                <nz-option [nzLabel]="'可用'" [nzValue]="'common'"></nz-option>
-                <nz-option [nzLabel]="'弃用'" [nzValue]="'urgent'"></nz-option>
+                <nz-option [nzLabel]="'可用'" [nzValue]="'可用'"></nz-option>
+                <nz-option [nzLabel]="'暂用'" [nzValue]="'暂用'"></nz-option>
+                <nz-option [nzLabel]="'禁用'" [nzValue]="'禁用'"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>

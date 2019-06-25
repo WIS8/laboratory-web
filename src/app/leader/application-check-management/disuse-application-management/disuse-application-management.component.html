@@ -1,9 +1,107 @@
-<nz-layout style="padding:0 24px 24px">
-  <nz-breadcrumb style="margin:12px 0;">
-    <nz-breadcrumb-item>leader</nz-breadcrumb-item>
-    <nz-breadcrumb-item>applicationCheck</nz-breadcrumb-item>
-    <nz-breadcrumb-item>disuse-application</nz-breadcrumb-item>
-  </nz-breadcrumb>
-  <nz-content style="background:#fff; padding: 24px; min-height: 280px;"><p>
-    disuse-application-management works!</nz-content>
-</nz-layout>
+<nz-breadcrumb style="margin:12px 0;">
+  <nz-breadcrumb-item>领导管理</nz-breadcrumb-item>
+  <nz-breadcrumb-item>申请管理</nz-breadcrumb-item>
+  <nz-breadcrumb-item>报废申请</nz-breadcrumb-item>
+</nz-breadcrumb>
+<nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">
+  <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
+         placeholder="输入报废编号进行搜索" type="text">
+</nz-input-group>
+<ng-template #suffixIconSearch>
+  <i nz-icon type="search"></i>
+</ng-template>
+<nz-table  [nzData]="disuseData"
+           (nzPageIndexChange)="findAll()"
+           (nzPageSizeChange)="findAll(true)"
+           [(nzPageIndex)]="pageIndex"
+           [nzPageSize]="pageSize"
+           [nzFrontPagination]="false"
+           [nzLoading]="loading"
+           [nzTotal]="total">
+  <thead nz-thead>
+  <tr>
+    <th nz-th><span>报废编号</span></th>
+    <th nz-th><span>设备详情</span></th>
+    <th nz-th><span>申请员工编号</span></th>
+    <th nz-th><span>检测员工编号</span></th>
+    <th nz-th><span>报废方式</span></th>
+    <th nz-th><span>报废日期</span></th>
+    <th nz-th><span>报废状态</span></th>
+    <th nz-th><span>报废更新日期</span></th>
+    <th nz-th><span>审核操作</span></th>
+  </tr>
+  </thead>
+  <tbody nz-tbody-tr *ngFor="let data of disuseData">
+  <tr nz-tbody-tr >
+    <td nz-td><a>{{data.disuseNo}}</a></td>
+    <td nz-td (click)="isVisibleDetail= true" >
+      <nz-popover [nzTitle]="'申请设备:'">
+        <a nz-popover>设备详细内容</a>
+        <ng-template #nzTemplate>
+          {{data.disuseDetail}}
+        </ng-template>
+      </nz-popover>
+    </td>
+    <td nz-td>{{data.disuseStaffNo}}</td>
+    <td nz-td>{{data.checkStaffNo}}</td>
+    <td nz-td>
+      <nz-popover [nzTitle]="'报废方式:'">
+        <a nz-popover>保费方式</a>
+        <ng-template #nzTemplate>
+          {{data.disuseWay}}
+        </ng-template>
+      </nz-popover>
+    </td>
+    <td nz-td>{{data.disuseDate|date:'yyyy-M-d'}}</td>
+    <td nz-td>{{data.disuseState}}</td>
+    <td nz-td>{{data.disuseUpdateDate|date:'yyyy-M-d'}}</td>
+    <td nz-td><button nz-button nzType="primary" (click)="showConfirm()">审核通过</button>
+      &nbsp;
+      <button nz-button nzType="danger" (click)="showDeleteConfirm()">拒绝通过</button></td>
+  </tr>
+  </tbody>
+</nz-table>
+
+
+<nz-modal (nzOnCancel)="isVisibleDetail = false"
+          (nzOnOk)="isVisibleDetail = false"
+          nzWidth="810"
+          [(nzVisible)]="isVisibleDetail"
+          [nzOkLoading]="okLoading"
+          nzCancelText="关闭"
+          nzOkText="知晓"
+          nzTitle="申请详情设备信息">
+
+
+  <nz-descriptions nzTitle="申请详情" nzBordered [nzSize]="size">
+    <nz-descriptions-item nzTitle="所申请设备信息">
+      <nz-table nzTemplateMode>
+        <thead>
+        <tr>
+          <th>设备编号</th>
+          <th>设备名称</th>
+          <th>申请数量</th>
+        </tr>
+        </thead>
+        <tbody nz-tbody-tr *ngFor="let data of deviceDetailData">
+        <tr nz-tbody-tr >
+          <td nz-td><a>{{data.deviceNo}}</a></td>
+          <td nz-td>{{data.modelName}}</td>
+          <td nz-td>{{data.disuseDetailQuantity}}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+      <!--<nz-list-->
+      <!--[nzDataSource]="deviceDetaildata"-->
+      <!--nzBordered-->
+      <!--nzSize="small"-->
+      <!--[nzRenderItem]="item"-->
+      <!--&gt;-->
+      <!--<ng-template #item let-item><nz-list-item [nzContent]="item"></nz-list-item></ng-template>-->
+      <!--</nz-list>-->
+    </nz-descriptions-item>
+
+
+  </nz-descriptions>
+
+</nz-modal>

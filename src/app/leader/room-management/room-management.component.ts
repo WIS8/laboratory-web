@@ -8,6 +8,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {Room} from '../../shared/domain/Room';
 import {BehaviorSubject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {RoomTypeEnum, RoomStateEnum} from '../../shared/domain/Enum';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -32,24 +33,24 @@ export class RoomManagementComponent implements OnInit {
     {
       roomNo: '1001',
       roomName: '华东理工大学',
-      roomType: '',
-      roomState: '',
+      roomType: RoomTypeEnum.LABORATORY,
+      roomState: RoomStateEnum.USING,
       roomAddress: '海思路999号',
       roomAddDate: '2018/1/11',
     },
     {
       roomNo: '1002',
       roomName: '华东理工大学',
-      roomType: '',
-      roomState: '',
+      roomType: RoomTypeEnum.REPOSITORY,
+      roomState: RoomStateEnum.TOUSE,
       roomAddress: '海思路999号',
       roomAddDate: '2018/2/22',
     },
     {
       roomNo: '1003',
       roomName: '华东理工大学',
-      roomType: '',
-      roomState: '',
+      roomType: RoomTypeEnum.UNDIFINED,
+      roomState: RoomStateEnum.NOUSE,
       roomAddress: '海思路999号',
       roomAddDate: '2018/3/30',
     }
@@ -59,16 +60,16 @@ export class RoomManagementComponent implements OnInit {
     this.roomAddForm = new FormGroup({
       roomNo: new FormControl('', [Validators.required]),
       roomName: new FormControl('', [Validators.required]),
-      roomType: new FormControl('', [Validators.required]),
-      roomState: new FormControl('', [Validators.required]),
+      roomType: new FormControl(RoomTypeEnum, [Validators.required]),
+      roomState: new FormControl(RoomStateEnum, [Validators.required]),
       roomAddress: new FormControl('', [Validators.required]),
-      roomAddDate: new FormControl('', [Validators.required]),
+      // roomAddDate: new FormControl('', [Validators.required]),
     });
     this.roomModForm = new FormGroup({
       roomNo: new FormControl('', [Validators.required]),
       roomName: new FormControl('', [Validators.required]),
-      roomType: new FormControl('', [Validators.required]),
-      roomState: new FormControl('', [Validators.required]),
+      roomType: new FormControl(RoomTypeEnum, [Validators.required]),
+      roomState: new FormControl(RoomStateEnum, [Validators.required]),
       roomAddress: new FormControl('', [Validators.required]),
       roomAddDate: new FormControl('', [Validators.required]),
     });
@@ -97,7 +98,7 @@ export class RoomManagementComponent implements OnInit {
         roomType: this.roomAddForm.get('roomType').value,
         roomState: this.roomAddForm.get('roomState').value,
         roomAddress: this.roomAddForm.get('roomAddress').value,
-        roomAddDate: this.roomAddForm.get('roomAddDate').value,
+        // roomAddDate: this.roomAddForm.get('roomAddDate').value,
       };
       // service here
       this.message.create('success', '添加成功');
@@ -128,6 +129,4 @@ export class RoomManagementComponent implements OnInit {
   modRoomSet(room: Room): void {    // 库房修改表单预设
     this.roomModForm.setValue(room);
   }
-
-
 }

@@ -1,4 +1,4 @@
-import {ApplyStateEnum, ApplyTypeEnum} from "./Enum";
+import {ApplyStateEnum, ApplyTypeEnum} from './Enum';
 
 export interface Apply {
 
