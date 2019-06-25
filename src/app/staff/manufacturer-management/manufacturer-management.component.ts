@@ -6,6 +6,8 @@ import {
 } from '@angular/forms';
 import {NzMessageService} from 'ng-zorro-antd';
 import {Firm} from '../../shared/domain/Firm';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 
 @Component({
@@ -21,6 +23,9 @@ export class ManufacturerManagementComponent implements OnInit {
   isVisible_modify = false;    // 修改隐藏
   pageIndex = 1;
   pageSize = 20;
+  loading = true;    //  加载状态
+  total = 0;    // 当前总数据，在服务器渲染时需要传入
+  searchTerms = new BehaviorSubject<string>('');  // 查询
 
   firms: Firm[] = [];
 
@@ -74,18 +79,26 @@ export class ManufacturerManagementComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => {
+        this.findAll();
+      }
+    );
   }
 
-  addManu(): void {
+  addManu(): void {       // 增加厂商
       if (this.manuAddForm.valid) {
         const firm: Firm = {
           firmNo: this.manuAddForm.get('firmNo').value,
           firmName: this.manuAddForm.get('firmName').value,
-          firmAddress: this.manuAddForm.get('firmNo').value,
-          firmContact: this.manuAddForm.get('firmName').value,
-          firmTelephone: this.manuAddForm.get('firmNo').value,
-          firmEmail: this.manuAddForm.get('firmName').value,
+          firmAddress: this.manuAddForm.get('firmAddress').value,
+          firmContact: this.manuAddForm.get('firmContact').value,
+          firmTelephone: this.manuAddForm.get('firmTelephone').value,
+          firmEmail: this.manuAddForm.get('firmEmail').value,
         };
+        // service here
         this._message.create('success', '添加成功');
         this.isVisible_add = false;
       } else {
@@ -93,8 +106,9 @@ export class ManufacturerManagementComponent implements OnInit {
       }
     }
 
-  modManu(): void {
+  modManu(): void {       // 修改厂商
     if (this.manuModForm.valid) {
+      // service here
       this._message.create('success', '修改成功');
       this.isVisible_modify = false;
     } else {
@@ -102,7 +116,15 @@ export class ManufacturerManagementComponent implements OnInit {
     }
   }
 
-  modManuSet(firm: Firm): void {
+  findAll(reset: boolean = false): void {
+    if (reset) {
+      this.pageIndex = 1;
+    }
+    this.loading = false;     //  暂时使用 需要修改
+    // service here
+  }
+
+  modManuSet(firm: Firm): void {    // 厂商修改表单预设
     this.manuModForm.setValue(firm);
   }
 

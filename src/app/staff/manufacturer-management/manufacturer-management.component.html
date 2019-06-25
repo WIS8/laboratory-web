@@ -60,13 +60,20 @@
         <nz-breadcrumb-item>厂商查询</nz-breadcrumb-item>
       </nz-breadcrumb>
       <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
-        <input #searchBox nz-input
+        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
                placeholder="输入厂商编号进行搜索" type="text">
       </nz-input-group>
       <ng-template #suffixIconSearch>
         <i nz-icon type="search"></i>
       </ng-template>
-      <nz-table [nzPageSize]="pageSize" [(nzPageIndex)]="pageIndex" [nzShowSizeChanger]="true">
+      <nz-table [nzData]="manuData"
+                (nzPageIndexChange)="findAll()"
+                (nzPageSizeChange)="findAll(true)"
+                [(nzPageIndex)]="pageIndex"
+                [nzPageSize]="pageSize"
+                [nzFrontPagination]="false"
+                [nzLoading]="loading"
+                [nzTotal]="total">
         <thead nz-thead>
           <tr>
             <th nz-th><span>厂商编号</span></th>

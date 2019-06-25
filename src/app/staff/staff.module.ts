@@ -14,6 +14,8 @@ import {DeviceAnalyseComponent} from './device-manage/device-analyse/device-anal
 import {DeviceRepairComponent} from './device-manage/device-repair/device-repair.component';
 import {DeviceRegisterComponent} from './device-manage/device-register/device-register.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ApplicationSearchComponent } from './application-management/application-search/application-search.component';
+import { ApplicationModComponent } from './application-management/application-mod/application-mod.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ManufacturerManagementComponent,
     ModelManagementComponent,
     ApplicationManagementComponent,
+    ApplicationSearchComponent,
+    ApplicationModComponent,
     DeviceQueryComponent,
     DeviceRepairComponent,
     DeviceRegisterComponent,
