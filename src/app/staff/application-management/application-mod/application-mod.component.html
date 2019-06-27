@@ -2,7 +2,7 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li nz-menu-item routerLink="/ApplicationManage/search">
+        <li nz-menu-item routerLink="/ApplicationManage">
           <span title><i class="anticon anticon-search"></i>申请单查询</span>
         </li>
         <li nz-menu-item routerLink="/ApplicationManage/model" nzSelected="true">
@@ -16,11 +16,14 @@
         <nz-breadcrumb-item>设备申请</nz-breadcrumb-item>
       </nz-breadcrumb>
       <div nz-row>
-        <div nz-col nzSpan="22">
+        <div nz-col nzSpan="20">
           <button nz-button nzType="primary" (click)="addRow()">增加申请项</button>
         </div>
+        <div nz-col nzSpan="2" style="left: -15px">
+          <button nz-button nzType="primary" (click)="isVisible_confirm = true">提交申请表</button>
+        </div>
         <div nz-col nzSpan="2">
-          <button nz-button nzType="primary" (click)="isVisible_confirm = true">确认提交</button>
+          <button nz-button nzType="primary" (click)="submitApplyDetail()">提交申请表项</button>
         </div>
       </div>
       <br/>
@@ -57,8 +60,8 @@
             <nz-form-label  nzFor="applyType" nzSm="4" nzXs="24">申请类型</nz-form-label>
             <nz-form-control nz-col [nzSpan]="10">
               <nz-select formControlName="applyType" [nzSize]="'default'">
-                <nz-option [nzLabel]="'普通'" [nzValue]="'common'"></nz-option>
-                <nz-option [nzLabel]="'急需'" [nzValue]="'urgent'"></nz-option>
+                <nz-option [nzLabel]="'普通'" [nzValue]="'普通'"></nz-option>
+                <nz-option [nzLabel]="'急需'" [nzValue]="'急需'"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -82,9 +85,7 @@
             <nz-form-control nz-col [nzSpan]="10">
               <nz-select nzShowSearch formControlName="modelNo"
                          [nzSize]="'default'">
-                <nz-option [nzLabel]="'1001'" [nzValue]="'1001'"></nz-option>
-                <nz-option [nzLabel]="'1002'" [nzValue]="'1002'"></nz-option>
-                <nz-option [nzLabel]="'2852'" [nzValue]="'2852'"></nz-option>
+                <nz-option *ngFor="let no of modelList" [nzLabel]="no" [nzValue]="no"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -102,26 +103,6 @@
           </nz-form-item>
         </form>
       </nz-modal>
-      <!--
-      <div nz-row>
-        <div nz-col nzSpan="8">
-          <label>申请类型: </label>
-          <nz-select [(ngModel)]="applyType" style="width: 200px;">
-            <nz-option [nzLabel]="'普通'" [nzValue]="'common'"></nz-option>
-            <nz-option [nzLabel]="'急需'" [nzValue]="'urgent'"></nz-option>
-          </nz-select>
-        </div>
-      </div>
-      <div nz-row>
-        <div nz-col nzSpan="12">
-          <label>申请理由: </label>
-          <textarea rows="5" cols="5" nz-input id="applyReason"></textarea>
-        </div>
-        <div nz-col nzSpan="12">
-          <button nz-button nzType="primary" style="width: 100px;top:100px;left:15px" (click)="submitApply()">确认提交</button>
-        </div>
-      </div>
-      -->
     </nz-layout>
   </nz-layout>
 </nz-layout>

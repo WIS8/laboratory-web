@@ -17,6 +17,12 @@
               nzTitle="型号信息">
       <form nz-form [formGroup]="modAddForm" >
         <nz-form-item>
+          <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
+          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+            <input formControlName="modelNo" nz-input type="text">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-label  nzFor="modelName" nzSm="4" nzXs="24">型号名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="modelName" nz-input type="text">
@@ -47,21 +53,22 @@
         <nz-breadcrumb-item>型号管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>型号查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
-        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
-               placeholder="输入型号编号进行搜索" type="text">
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i nz-icon type="search"></i>
-      </ng-template>
-      <nz-table [nzData]="modData"
-                (nzPageIndexChange)="findAll()"
-                (nzPageSizeChange)="findAll(true)"
-                [(nzPageIndex)]="pageIndex"
-                [nzPageSize]="pageSize"
-                [nzFrontPagination]="false"
+      <nz-content>
+        <div nz-col nzSpan="16"></div>
+        <div nz-col nzSpan="8">
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input [(ngModel)]="searchValue" placeholder="请输入型号编号" />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" (click)="search()" nzSearch><i nz-icon type="search"></i></button>
+          </ng-template>
+        </div>
+      </nz-content>
+      <nz-content style="min-height: 20px;"></nz-content>
+      <nz-table [nzShowPagination]="false"
                 [nzLoading]="loading"
-                [nzTotal]="total">
+                [nzNoResult]="null"
+                [nzData]="models">
         <thead nz-thead>
         <tr>
           <th nz-th><span>型号编号</span></th>
@@ -72,17 +79,20 @@
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody-tr *ngFor="let data of modData">
+        <tbody nz-tbody-tr *ngFor="let data of models">
         <tr nz-tbody-tr >
           <td nz-td>{{data.modelNo}}</td>
           <td nz-td>{{data.modelName}}</td>
           <td nz-td>{{data.modelType}}</td>
           <td nz-td>{{data.modelNorm}}</td>
           <td nz-td>{{data.modelPrice}}</td>
-          <td nz-td (click)="isVisible_modify = true;modModSet(data)"><a>修改</a></td>
+          <td nz-td (click)="isVisible_modify = true;modModSet(data);modelNoTemp = data.modelNo"><a>修改</a></td>
         </tr>
         </tbody>
       </nz-table>
+      <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                     (nzPageIndexChange)="findAll()" (nzPageSizeChange)="findAll(true)" nzShowQuickJumper nzShowSizeChanger>
+      </nz-pagination>
       <nz-modal (nzOnCancel)="isVisible_modify = false"
                 (nzOnOk)="modMod()"
                 [(nzVisible)]="isVisible_modify"

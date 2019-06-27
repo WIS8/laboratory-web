@@ -1,0 +1,28 @@
+#head {
+  color: deepskyblue;
+  font-family: 微软雅黑, fantasy;
+  font-size: 26px;
+  text-align: center;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.content {
+  padding-left: 20%;
+  padding-right: 20%;
+  font-size: 20px;
+  font-family: 宋体, fantasy;
+  color: #333333;
+}
+
+.form-content {
+  font-size: 20px;
+  font-family: 宋体, fantasy;
+  color: #333333;
+}
+
+.input-label {
+  max-width: 200px;
+  font-family: Consolas, fantasy;
+  font-size: 20px;
+}

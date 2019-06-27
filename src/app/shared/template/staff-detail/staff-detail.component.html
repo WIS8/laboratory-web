@@ -1,0 +1,72 @@
+<div>
+  <div id="head">
+    <p>
+      <strong>{{staff.staffName}}</strong>
+      <button nz-button style="float: right" nzType="danger" (click)="exit()">
+        退出登录
+      </button>
+    </p>
+  </div>
+
+  <div class="content">
+    <nz-divider style="background: orange"></nz-divider>
+
+    <span><p>
+      <i nz-icon nzType="idcard" nzTheme="outline"></i>
+      <strong> 员工编号：</strong>{{staff.staffNo}}
+    </p></span>
+
+    <span><p>
+      <i nz-icon nzType="plus" nzTheme="outline"></i>
+      <strong> 注册时间：</strong>{{staff.staffRegisterTime}}
+    </p></span>
+
+    <span><p>
+      <i nz-icon nzType="crown" nzTheme="outline"></i>
+      <strong> 职责权限：</strong>{{staff.staffDuty}}
+    </p></span>
+
+    <span><p>
+      <i nz-icon nzType="eye" nzTheme="outline"></i>
+      <strong> 您的性别：</strong>
+      <i nz-icon *ngIf="staff.staffSex === '男'" nzType="man" nzTheme="outline"></i>
+      <i nz-icon *ngIf="staff.staffSex === '女'" nzType="woman" nzTheme="outline"></i>
+    </p></span>
+
+    <nz-divider style="background: orange"></nz-divider>
+
+    <form nz-form (ngSubmit)="_submit()" [formGroup]="mineInfo">
+      <nz-form-item>
+        <nz-form-control class="form-content">
+          <i nz-icon nzType="mail" nzTheme="outline"></i>
+          <strong> 电子邮箱：</strong>
+          <label class="input-label">
+            <input nz-input type="text" formControlName="staffEmail" />
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control class="form-content">
+          <i nz-icon nzType="phone" nzTheme="outline"></i>
+          <strong> 联系电话：</strong>
+          <label class="input-label">
+            <input nz-input type="text" formControlName="staffTelephone" />
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="default">
+            修改密码
+          </button>
+          <button nz-button nzType="primary" style="float: right" type="submit">
+            确认修改
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </div>
+</div>

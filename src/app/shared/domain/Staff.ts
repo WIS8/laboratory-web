@@ -1,4 +1,7 @@
-import {SexEnum, StaffDutyEnum} from './Enum';
+import {
+  SexEnum,
+  StaffDutyEnum
+} from './Enum';
 
 export interface Staff {
 

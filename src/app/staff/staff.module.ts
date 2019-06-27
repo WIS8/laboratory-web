@@ -28,7 +28,7 @@ import { ApplicationDetailComponent } from './application-management/application
     CommonModule,
     NgZorroAntdModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class StaffModule { }

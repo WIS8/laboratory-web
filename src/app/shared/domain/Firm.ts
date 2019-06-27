@@ -7,7 +7,7 @@ export interface Firm {
 
   firmAddress?: string;
 
-  firmContact?: string;
+  firmContacter?: string;
 
   firmTelephone?: string;
 

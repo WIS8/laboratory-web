@@ -2,7 +2,7 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li nz-menu-item routerLink="/ApplicationManage/search" nzSelected="true">
+        <li nz-menu-item routerLink="/ApplicationManage" nzSelected="true">
           <span title><i class="anticon anticon-search"></i>申请单查询</span>
         </li>
         <li nz-menu-item routerLink="/ApplicationManage/model">
@@ -17,14 +17,11 @@
       </nz-breadcrumb>
       <div nz-row>
         <div nz-col nzSpan="22">
-          <button nz-button nzType="primary" (click)="addRow()">增加申请项</button>
-        </div>
-        <div nz-col nzSpan="2">
-          <button nz-button nzType="primary" (click)="submitApply()">确认提交</button>
+          <button nz-button nzType="primary" (click)="isVisible_add = true;">增加申请项</button>
         </div>
       </div>
       <br/>
-      <nz-table [nzData]="detailApplyData"
+      <nz-table [nzData]="applyDetails"
                 (nzPageIndexChange)="findAll()"
                 (nzPageSizeChange)="findAll(true)"
                 [(nzPageIndex)]="pageIndex"
@@ -40,7 +37,7 @@
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody-tr *ngFor="let data of detailApplyData">
+        <tbody nz-tbody-tr *ngFor="let data of applyDetails">
         <tr nz-tbody-tr >
           <td nz-td>{{data.modelNo}}</td>
           <td nz-td>{{data.applyDetailQuantity}}</td>
@@ -48,33 +45,52 @@
           <td nz-td>
             <a (click)="isVisible_modify = true;modelNoTemp = modelNoSet(data.modelNo);modApplySet(data)">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="deleteRow(data.modelNo)">删除</a>
+            <a nz-popconfirm nzTitle="确认删除" (nzOnConfirm)="deleteRow(data.modelNo)">删除</a>
           </td>
         </tr>
         </tbody>
       </nz-table>
+      <!--增加申请表项 -->
+      <nz-modal (nzOnCancel)="isVisible_add = false"
+                (nzOnOk)="addRow();"
+                [(nzVisible)]="isVisible_add"
+                nzOkText="添加"
+                nzTitle="型号信息">
+        <form nz-form [formGroup]="detailAddForm" >
+          <nz-form-item>
+          <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
+          <nz-form-control nz-col [nzSpan]="10">
+            <nz-select nzShowSearch formControlName="modelNo"
+                       [nzSize]="'default'">
+              <nz-option *ngFor="let no of modelList" [nzLabel]="no" [nzValue]="no"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="applyDetailQuantity" nzSm="4" nzXs="24">数量</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <nz-input-number formControlName="applyDetailQuantity" nz-input></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzFor="applyDetailUnit" nzSm="4" nzXs="24">单位</nz-form-label>
+            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
+              <input formControlName="applyDetailUnit" nz-input type="text">
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
       <!-- 修改申请表项 -->
       <nz-modal (nzOnCancel)="isVisible_modify = false"
-                (nzOnOk)="detailApply(modelNoTemp)"
+                (nzOnOk)="detailApply()"
                 [(nzVisible)]="isVisible_modify"
                 nzOkText="修改"
                 nzTitle="申请表项信息">
         <form nz-form [formGroup]="applyDetailForm" >
           <nz-form-item>
-            <nz-form-label  nzFor="modelNo" nzSm="4" nzXs="24">型号编号</nz-form-label>
-            <nz-form-control nz-col [nzSpan]="10">
-              <nz-select nzShowSearch formControlName="modelNo"
-                         [nzSize]="'default'">
-                <nz-option [nzLabel]="'1001'" [nzValue]="'1001'"></nz-option>
-                <nz-option [nzLabel]="'1002'" [nzValue]="'1002'"></nz-option>
-                <nz-option [nzLabel]="'2852'" [nzValue]="'2852'"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
             <nz-form-label nzFor="applyDetailQuantity" nzSm="4" nzXs="24">数量</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <nz-input-number formControlName="applyDetailQuantity" nz-input type="text"></nz-input-number>
+              <nz-input-number formControlName="applyDetailQuantity" nz-input></nz-input-number>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>

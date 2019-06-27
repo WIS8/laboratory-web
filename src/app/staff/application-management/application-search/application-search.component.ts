@@ -8,6 +8,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {Apply} from '../../../shared/domain/Apply';
 import {BehaviorSubject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ApplyService} from '../../../shared/service/apply.service';
 
 @Component({
   selector: 'app-application-search',
@@ -18,46 +19,16 @@ export class ApplicationSearchComponent implements OnInit {
   applyModForm: FormGroup;
   isVisible_modify = false;    // 修改隐藏
   pageIndex = 1;
-  pageSize = 20;
+  pageSize = 10;
+  applyNoTemp = '';
   loading = true;    //  加载状态
   total = 0;    // 当前总数据，在服务器渲染时需要传入
-  searchTerms = new BehaviorSubject<string>('');  // 查询
+  searchValue = '';
 
   applys: Apply[] = [];
 
-  applyData = [
-    {
-      applyNo: '1001',
-      applyType: '普通',
-      applyReason: '要用',
-      applyDate: '2018-1-1',
-      applyState: '等待审查',
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1002',
-      applyType: '普通',
-      applyReason: '我要用',
-      applyDate: '2018-2-1',
-      applyState: '批准通过',
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1003',
-      applyType: '急需',
-      applyReason: '它要用',
-      applyDate: '2018-1-29',
-      applyState: '需要修改',
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    }
-  ];
-
-
-
-  constructor(private _message: NzMessageService) {
+  constructor(private _message: NzMessageService,
+              private applyService: ApplyService) {
     this.applyModForm = new FormGroup({
       applyType: new FormControl('', [Validators.required]),
       applyReason: new FormControl('', [Validators.required, Validators.maxLength(255)])
@@ -65,22 +36,54 @@ export class ApplicationSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchTerms.pipe(
+   /* this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(() => {
         this.findAll();
       }
-    );
+    );*/
+   this.findAll();
   }
 
+  search(): void {
+    this.pageIndex = 1;
+    this.applys = null;
+    this.applyService.findByNo(this.searchValue, 100000)
+      .subscribe(
+        (data) => {
+          if (!data[`0`]) {
+            this.applys = [data];
+            console.log([data]);
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          console.log('end');
+        }
+      );
+  }
 
   modApply(): void {       // 修改申请单
     if (this.applyModForm.valid) {
-      // service here
-      this._message.create('success', '修改成功');
-      this.isVisible_modify = false;
-      this.applyModForm.reset();
+      const apply: Apply = {
+        applyNo: this.applyNoTemp,
+        applyType: this.applyModForm.get('applyType').value,
+        applyReason: this.applyModForm.get('applyReason').value
+      };
+      this.applyService.update(apply, 100004).subscribe(    //  staffno
+        () => {
+          this.isVisible_modify = false;
+          this._message.create('success', '修改成功');
+          this.applyModForm.reset();
+          this.findAll();
+        },
+        () => {
+          this._message.create('error', '修改失败');
+        }
+      );
     } else {
       this._message.create('warning', '填写数据有误');
     }
@@ -90,8 +93,32 @@ export class ApplicationSearchComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-    this.loading = false;     //  暂时使用 需要修改
-    // service here
+    this.applyService.total(100000).subscribe(
+      (data) => {
+        this.total = data[`status`];
+        console.log(this.total);
+      }
+    );
+    this.loading = true;
+    this.applyService.findAll(this.pageIndex, this.pageSize, 100000)   //  staffno
+      .subscribe(
+        (data) => {
+          if (data[`length`] >=  0) {
+            console.log(data);
+            this.loading = false;
+            this.applys = data;
+          } else {
+            this._message.create('error', '发生错误！');
+          }
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        () => {
+          console.log('end');
+        }
+      );
   }
 
   modApplySet(data: any): void {

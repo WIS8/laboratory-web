@@ -11,8 +11,9 @@
       </ul>
     </nz-sider>
     <nz-modal (nzOnCancel)="isVisible_add = false"
-              (nzOnOk)="addManu();"
+              (nzOnOk)="addManu()"
               [(nzVisible)]="isVisible_add"
+              [nzOkLoading]="okLoading"
               nzOkText="添加"
               nzTitle="厂商信息">
       <form nz-form [formGroup]="manuAddForm" >
@@ -29,9 +30,9 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
+          <nz-form-label nzFor="firmContacter" nzSm="4" nzXs="24">联系人</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-            <input formControlName="firmContact" nz-input type="text">
+            <input formControlName="firmContacter" nz-input type="text">
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -53,21 +54,22 @@
         <nz-breadcrumb-item>厂商管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>厂商查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
-        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
-               placeholder="输入厂商编号进行搜索" type="text">
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i nz-icon type="search"></i>
-      </ng-template>
-      <nz-table [nzData]="manuData"
-                (nzPageIndexChange)="findAll()"
-                (nzPageSizeChange)="findAll(true)"
-                [(nzPageIndex)]="pageIndex"
-                [nzPageSize]="pageSize"
-                [nzFrontPagination]="false"
+      <nz-content>
+        <div nz-col nzSpan="16"></div>
+        <div nz-col nzSpan="8">
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input [(ngModel)]="searchValue" placeholder="请输入厂商编号" />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" (click)="search()" nzSearch><i nz-icon type="search"></i></button>
+          </ng-template>
+        </div>
+      </nz-content>
+      <nz-content style="min-height: 20px;"></nz-content>
+      <nz-table [nzShowPagination]="false"
                 [nzLoading]="loading"
-                [nzTotal]="total">
+                [nzNoResult]="null"
+                [nzData]="firms">
         <thead nz-thead>
           <tr>
             <th nz-th><span>厂商编号</span></th>
@@ -80,19 +82,22 @@
             <th nz-th><span>操作</span></th>
           </tr>
         </thead>
-        <tbody nz-tbody-tr *ngFor="let data of manuData">
-          <tr nz-tbody-tr >
+        <tbody>
+          <tr nz-tbody-tr *ngFor="let data of firms">
             <td nz-td>{{data.firmNo}}</td>
             <td nz-td>{{data.firmName}}</td>
             <td nz-td>{{data.firmAddress}}</td>
-            <td nz-td>{{data.firmContact}}</td>
+            <td nz-td>{{data.firmContacter}}</td>
             <td nz-td>{{data.firmTelephone}}</td>
             <td nz-td>{{data.firmEmail}}</td>
             <td nz-td>{{data.firmAddDate|date:'yyyy-M-d'}}</td>
-            <td nz-td (click)="isVisible_modify = true;modManuSet(data)"><a>修改</a></td>
+            <td nz-td (click)="isVisible_modify = true;modManuSet(data);firmNoTemp = data.firmNo"><a>修改</a></td>
           </tr>
         </tbody>
       </nz-table>
+      <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                     (nzPageIndexChange)="findAll()" (nzPageSizeChange)="findAll(true)" nzShowQuickJumper nzShowSizeChanger>
+      </nz-pagination>
       <nz-modal (nzOnCancel)="isVisible_modify = false"
                 (nzOnOk)="modManu()"
                 [(nzVisible)]="isVisible_modify"
@@ -106,9 +111,9 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label nzFor="firmContact" nzSm="4" nzXs="24">联系人</nz-form-label>
+            <nz-form-label nzFor="firmContacter" nzSm="4" nzXs="24">联系人</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <input formControlName="firmContact" nz-input type="text">
+              <input formControlName="firmContacter" nz-input type="text">
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>

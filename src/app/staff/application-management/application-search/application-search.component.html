@@ -2,7 +2,7 @@
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li nz-menu-item routerLink="/ApplicationManage/search" nzSelected="true">
+        <li nz-menu-item routerLink="/ApplicationManage" nzSelected="true">
           <span title><i class="anticon anticon-search"></i>申请单查询</span>
         </li>
         <li nz-menu-item routerLink="/ApplicationManage/model">
@@ -15,21 +15,22 @@
         <nz-breadcrumb-item>申请管理</nz-breadcrumb-item>
         <nz-breadcrumb-item>申请单查询</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:885px;top:-36px;">
-        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
-               placeholder="输入申请单编号进行搜索" type="text">
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i nz-icon type="search"></i>
-      </ng-template>
-      <nz-table  [nzData]="applyData"
-                 (nzPageIndexChange)="findAll()"
-                 (nzPageSizeChange)="findAll(true)"
-                 [(nzPageIndex)]="pageIndex"
-                 [nzPageSize]="pageSize"
-                 [nzFrontPagination]="false"
+      <nz-content>
+        <div nz-col nzSpan="16"></div>
+        <div nz-col nzSpan="8">
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input [(ngModel)]="searchValue" placeholder="请输入申请单编号" />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" (click)="search()" nzSearch><i nz-icon type="search"></i></button>
+          </ng-template>
+        </div>
+      </nz-content>
+      <nz-content style="min-height: 20px;"></nz-content>
+      <nz-table  [nzData]=applys
+                 [nzShowPagination]="false"
                  [nzLoading]="loading"
-                 [nzTotal]="total">
+                 [nzNoResult]="null">
         <thead nz-thead>
         <tr>
           <th nz-th><span>申请单编号</span></th>
@@ -42,9 +43,9 @@
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody-tr *ngFor="let data of applyData">
+        <tbody nz-tbody-tr *ngFor="let data of applys">
         <tr nz-tbody-tr >
-          <td nz-td><a routerLink="/ApplicationManage/detail">{{data.applyNo}}</a></td>
+          <td nz-td><a routerLink="/ApplicationManage/detail" [queryParams]="{id:data.applyNo}">{{data.applyNo}}</a></td>
           <td nz-td>{{data.applyType}}</td>
           <td nz-td>
             <nz-popover [nzTitle]="'理由:'">
@@ -65,10 +66,13 @@
               </ng-template>
             </nz-popover>
           </td>
-          <td nz-td (click)="isVisible_modify = true;modApplySet(data)"><a>修改</a></td>
+          <td nz-td (click)="isVisible_modify = true;modApplySet(data);applyNoTemp = data.applyNo"><a>修改</a></td>
         </tr>
         </tbody>
-      </nz-table>
+      </nz-table  >
+      <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                     (nzPageIndexChange)="findAll()" (nzPageSizeChange)="findAll(true)" nzShowQuickJumper nzShowSizeChanger>
+      </nz-pagination>
       <nz-modal (nzOnCancel)="isVisible_modify = false"
                 (nzOnOk)="modApply()"
                 [(nzVisible)]="isVisible_modify"

@@ -29,7 +29,7 @@ const routes: Routes = [{
     path: 'ApplicationManage',
     component: ApplicationManagementComponent,
     children: [
-      {  path: 'search',
+      {  path: '',
         component: ApplicationSearchComponent,
       },
       {  path: 'model',

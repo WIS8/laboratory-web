@@ -1,0 +1,52 @@
+<nz-layout style="padding:0 24px 24px">
+  <nz-breadcrumb style="margin:12px 0;">
+    <nz-breadcrumb-item>主页</nz-breadcrumb-item>
+    <nz-breadcrumb-item>设备管理</nz-breadcrumb-item>
+    <nz-breadcrumb-item>设备维修</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <form nz-form [formGroup]="DeviceRepairForm" >
+  <nz-form-item>
+    <nz-form-label  nzFor="DeviceNo" nzSm="4" nzXs="24">设备编号</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceNo" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label  nzFor="DeviceRepairNo" nzSm="4" nzXs="24">报修编号</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceRepairNo" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label  nzFor="DeviceRepairPrice" nzSm="4" nzXs="24">修理费用</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceRepairPrice" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="DeviceRepairResult" nzSm="4" nzXs="24">修理结果</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceRepairResult" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="DeviceRepairDateStart" nzSm="4" nzXs="24">报修日期</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceRepairDateStart" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="DeviceRepairDateFinish" nzSm="4" nzXs="24">完成日期</nz-form-label>
+    <nz-form-control nzSm="8" nzXs="24" nzHasFeedback>
+      <input formControlName="DeviceRepairDateFinish" nz-input type="text">
+    </nz-form-control>
+  </nz-form-item>
+</form>
+  <div nz-row>
+    <div nz-col nzSpan="4"></div>
+    <div nz-col nzSpan="7">
+      <button nz-button nzType="primary" nzBlock>确认</button>
+    </div>
+    <div nz-col nzSpan="11"></div>
+  </div>
+</nz-layout>
