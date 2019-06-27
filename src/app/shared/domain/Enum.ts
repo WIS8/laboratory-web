@@ -59,7 +59,7 @@ export enum DeviceStateEnum {
 
   USING = '使用中',
 
-  REPAIR = '修理中',
+  REPAIR = '维修中',
 
   NOUSE = '报废中',
 

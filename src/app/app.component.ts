@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = '设备管理系统appComponent';
+  navigationSubscription;
+
+
 }

@@ -6,14 +6,17 @@ import {ApplicationCheckManagementComponent} from './application-check-managemen
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ApplicationCheckManagementRoutingModule} from './application-check-management-routing.module';
-import { ApplicationCheckCollapseComponent } from './application-check-collapse/application-check-collapse.component';
+import { UrgentApplyComponent } from './device-application-management/urgent-apply/urgent-apply.component';
+import { ByStateComponent } from './disuse-application-management/by-state/by-state.component';
+
 
 @NgModule({
   declarations: [
       ApplicationCheckManagementComponent,
       DeviceApplicationManagementComponent,
       DisuseApplicationManagementComponent,
-      ApplicationCheckCollapseComponent,
+      UrgentApplyComponent,
+      ByStateComponent,
   ],
   imports: [
     // AppModule,
@@ -23,6 +26,7 @@ import { ApplicationCheckCollapseComponent } from './application-check-collapse/
     NgZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
+
   ],
 })
 export class ApplicationCheckManagementModule {}

@@ -12,5 +12,8 @@ export class ApplicationCheckManagementComponent implements OnInit {
 
   ngOnInit() {
   }
+  reload(): void {
+    this.ngOnInit();
+  }
 
 }

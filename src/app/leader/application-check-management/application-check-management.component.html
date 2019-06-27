@@ -9,25 +9,28 @@
         <li nz-submenu >
           <span title ><i nz-icon type="appstore"></i>设备申请单</span>
           <ul>
-            <li nz-submenu>
-              <span title><i nz-icon nzType="clock-circle" nzTheme="outline"></i>未审核</span>
+            <li nz-submenu >
+              <span title><i nz-icon nzType="clock-circle" nzTheme="outline"></i>待审查</span>
               <ul>
-            <li nz-menu-item  routerLink="./deviceApplicationCheck" routerLinkActive="active">紧急申请</li>
-            <li nz-menu-item >普通申请</li>
+            <li nz-menu-item  (click)="reload()" routerLink="./deviceApplicationCheck/urgent" routerLinkActive="active" [queryParams]="{type:'急需'}" >急需</li>
+            <li nz-menu-item (click)="reload()" routerLink="./deviceApplicationCheck/common" routerLinkActive="active" [queryParams]="{type:'普通'}">普通</li>
               </ul>
-            <li nz-menu-item   >
-              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已审核</span>
+            <li nz-menu-item   routerLink="./deviceApplicationCheck/modify" routerLinkActive="active" [queryParams]="{state: '需修改'}">
+              <span title><i nz-icon nzType="close" nzTheme="outline"></i>需修改</span>
+            <li nz-menu-item   routerLink="./deviceApplicationCheck/finish" routerLinkActive="active" [queryParams]="{state: '已通过'}">
+              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已通过</span>
           </ul>
         </li>
         <!--disuseApplicationCheck-->
         <li nz-submenu >
           <span title><i class="anticon anticon-bars" ></i>报废申请单</span>
           <ul>
-            <li nz-menu-item routerLink="./disuseApplicationCheck" routerLinkActive="active">
-              <span title><i nz-icon nzType="clock-circle" nzTheme="outline"></i>未审核</span>
-
-            <li nz-menu-item>
-              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已审核</span>
+            <li nz-menu-item routerLink="./disuseApplicationCheck/commit" routerLinkActive="active" [queryParams]="{state: '待审核'}">
+              <span title><i nz-icon nzType="clock-circle" nzTheme="outline" ></i>待审核</span>
+            <li nz-menu-item  routerLink="./disuseApplicationCheck/cannot" routerLinkActive="active" [queryParams]="{state: '未通过'}">
+              <span title><i nz-icon nzType="close" nzTheme="outline"></i>未通过</span>
+            <li nz-menu-item  routerLink="./disuseApplicationCheck/disuse" routerLinkActive="active" [queryParams]="{state: '已报废'}">
+              <span title><i nz-icon nzType="check" nzTheme="outline"></i>已报废</span>
           </ul>
         </li>
       </ul>

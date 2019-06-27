@@ -1,4 +1,7 @@
-import {RoomStateEnum, RoomTypeEnum} from './Enum';
+import {
+  RoomStateEnum,
+  RoomTypeEnum
+} from './Enum';
 
 export interface Room {
 

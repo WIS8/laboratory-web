@@ -14,7 +14,8 @@ import {DeviceApplicationManagementComponent} from './application-check-manageme
 import {DisuseApplicationManagementComponent} from './application-check-management/disuse-application-management/disuse-application-management.component';
 import { StaffAcessEditComponent } from './access-management/staff-access-edit/staff-acess-edit.component';
 import { RoomAccessEditComponent } from './access-management/room-access-edit/room-access-edit.component';
-
+import {UrgentApplyComponent} from './application-check-management/device-application-management/urgent-apply/urgent-apply.component';
+import {ByStateComponent} from './application-check-management/disuse-application-management/by-state/by-state.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { RoomAccessEditComponent } from './access-management/room-access-edit/ro
      DisuseApplicationManagementComponent,
      StaffAcessEditComponent,
      RoomAccessEditComponent,
+    UrgentApplyComponent,
+    ByStateComponent
   ],
   imports: [
     // AppModule,

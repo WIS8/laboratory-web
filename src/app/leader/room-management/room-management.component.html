@@ -23,12 +23,6 @@
               nzTitle="库房信息">
       <form nz-form [formGroup]="roomAddForm" >
         <nz-form-item>
-          <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">库房编号</nz-form-label>
-          <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-            <nz-input-number nzFor="roomNo" formControlName="roomNo" id="roomNo"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
           <nz-form-label  nzFor="roomName" nzSm="4" nzXs="24">库房名称</nz-form-label>
           <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
             <input formControlName="roomName" nz-input type="text">
@@ -77,22 +71,30 @@
         <!--<input #searchBox nz-input-->
                <!--placeholder="输入库房编号进行搜索" type="text">-->
       <!--</nz-input-group>-->
-      <nz-input-group [nzSuffix]="suffixIconSearch" style="width:400px;left:585px;top:-36px;">
-        <input #searchBox (input)="searchTerms.next(searchBox.value)" nz-input
-               placeholder="输入库房编号进行搜索" type="text">
-      </nz-input-group>
 
-      <ng-template #suffixIconSearch>
-        <i nz-icon type="search"></i>
+
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input [(ngModel)]="searchValueRoomNo" placeholder="请输入库房编号" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" (click)="searchByRoomNo(searchValueRoomNo)" nzSearch><i nz-icon type="search"></i></button>
       </ng-template>
-      <nz-table [nzData]="roomData"
+
+      <nz-content style="min-height: 20px;"></nz-content>
+
+
+      <nz-table [nzData]="roomDatas"
                 (nzPageIndexChange)="findAll()"
                 (nzPageSizeChange)="findAll(true)"
                 [(nzPageIndex)]="pageIndex"
                 [nzPageSize]="pageSize"
                 [nzFrontPagination]="false"
                 [nzLoading]="loading"
-                [nzTotal]="total">
+                [nzTotal]="total"
+                [nzShowPagination]="false"
+                [nzNoResult]="null"
+      >
+
         <thead nz-thead>
         <tr>
           <th nz-th><span>库房编号</span></th>
@@ -104,7 +106,7 @@
           <th nz-th><span>操作</span></th>
         </tr>
         </thead>
-        <tbody nz-tbody-tr *ngFor="let data of roomData">
+        <tbody nz-tbody-tr *ngFor="let data of roomDatas">
         <tr nz-tbody-tr >
           <td nz-td>{{data.roomNo}}</td>
           <td nz-td>{{data.roomName}}</td>
@@ -112,22 +114,19 @@
           <td nz-td>{{data.roomState}}</td>
           <td nz-td>{{data.roomAddress}}</td>
           <td nz-td>{{data.roomAddDate|date:'yyyy-M-d'}}</td>
-          <td nz-td (click)="isVisibleModify = true; modRoomSet(data)"><a>修改</a></td>
+          <td nz-td (click)="isVisibleModify = true; temp = data.roomNo;  modRoomSet(data,temp)"><a>修改</a></td>
         </tr>
         </tbody>
       </nz-table>
+      <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                     (nzPageIndexChange)="findAll()" (nzPageSizeChange)="findAll(true)" nzShowQuickJumper nzShowSizeChanger>
+      </nz-pagination>
       <nz-modal (nzOnCancel)="isVisibleModify = false"
                 (nzOnOk)="modRoom()"
                 [(nzVisible)]="isVisibleModify"
                 nzOkText="修改"
                 nzTitle="库房信息">
         <form nz-form [formGroup]="roomModForm" >
-          <nz-form-item>
-            <nz-form-label  nzFor="roomNo" nzSm="4" nzXs="24">库房编号</nz-form-label>
-            <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
-              <nz-input-number nzFor="roomNo" formControlName="roomNo" id="roomNo"></nz-input-number>
-            </nz-form-control>
-          </nz-form-item>
           <nz-form-item>
             <nz-form-label  nzFor="roomName" nzSm="4" nzXs="24">库房名称</nz-form-label>
             <nz-form-control nzSm="18" nzXs="24" nzHasFeedback>
@@ -160,12 +159,6 @@
               <input formControlName="roomAddress" nz-input type="text">
             </nz-form-control>
           </nz-form-item>
-          <!--<nz-form-item>-->
-            <!--<nz-form-label nzFor="roomAddDate" nzSm="4" nzXs="24">库房添加时间</nz-form-label>-->
-            <!--<nz-form-control nzSm="18" nzXs="24" nzHasFeedback>-->
-              <!--<input formControlName="roomAddDate" nz-input type="text">-->
-            <!--</nz-form-control>-->
-          <!--</nz-form-item>-->
         </form>
       </nz-modal>
     </nz-layout>

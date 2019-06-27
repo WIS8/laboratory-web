@@ -1,32 +1,42 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AppRoutingModule} from '../app-routing.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
-import {HttpClientModule} from '@angular/common/http';
+import {
+  NgZorroAntdModule,
+  NZ_I18N,
+  zh_CN
+} from 'ng-zorro-antd';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { SexPipe } from './channel/sex.pipe';
+import { StaffDetailComponent } from './template/staff-detail/staff-detail.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SexPipe,
+    StaffDetailComponent
+  ],
   imports: [
     CommonModule,
-    AppRoutingModule,
     NgZorroAntdModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [
-    NgZorroAntdModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
     CommonModule,
     NgZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StaffDetailComponent
   ],
   providers: [{
     provide: NZ_I18N,
     useValue: zh_CN
-  }],
+  }]
 })
-export class SharedModule { }
+export class SharedModule {
+}

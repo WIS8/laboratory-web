@@ -1,5 +1,7 @@
 export const environment = {
-  production: false
+  production: false,
+  // serverUrl: 'http://192.168.137.1:8080/api/v1',
+  serverUrl: 'http://192.168.31.112:8080/api/v1',
 };
 
 /*

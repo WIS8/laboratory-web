@@ -9,6 +9,8 @@ import {DeviceApplicationManagementComponent} from './application-check-manageme
 import {DisuseApplicationManagementComponent} from './application-check-management/disuse-application-management/disuse-application-management.component';
 import {RoomAccessEditComponent} from './access-management/room-access-edit/room-access-edit.component';
 import {StaffAcessEditComponent} from './access-management/staff-access-edit/staff-acess-edit.component';
+import {UrgentApplyComponent} from './application-check-management/device-application-management/urgent-apply/urgent-apply.component';
+import {ByStateComponent} from './application-check-management/disuse-application-management/by-state/by-state.component';
 
 const routes: Routes = [
   {
@@ -24,10 +26,43 @@ const routes: Routes = [
         component: ApplicationCheckManagementComponent,
         children: [
           {  path: 'deviceApplicationCheck',
-            component: DeviceApplicationManagementComponent
+            component: DeviceApplicationManagementComponent,
+            // runGuardsAndResolvers: 'paramsChange',
+            children: [
+              {
+                path: 'urgent',
+                component: UrgentApplyComponent,
+              },
+              {
+                path: 'common',
+                component: UrgentApplyComponent,
+              },
+              {
+                path: 'finish',
+                component: UrgentApplyComponent,
+              },
+              {
+                path: 'modify',
+                component: UrgentApplyComponent,
+              },
+            ]
           },
           {  path: 'disuseApplicationCheck',
-            component: DisuseApplicationManagementComponent
+            component: DisuseApplicationManagementComponent,
+            children: [
+              {
+                path: 'commit',
+                component: ByStateComponent,
+              },
+              {
+                path: 'cannot',
+                component: ByStateComponent,
+              },
+              {
+                path: 'disuse',
+                component: ByStateComponent,
+              },
+            ]
           },
           // {
           //   path: '',

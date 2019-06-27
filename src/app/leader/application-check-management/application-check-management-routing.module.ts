@@ -32,7 +32,8 @@ const routes: Routes = [
     DeviceApplicationManagementComponent,
     DisuseApplicationManagementComponent,
   ],
-  imports: [RouterModule.forChild(routes),
+  imports: [
+    RouterModule.forChild(routes),
     LeaderRoutingModule,
     ApplicationCheckManagementRoutingModule,
   ],

@@ -6,6 +6,12 @@ import {Apply} from '../../../shared/domain/Apply';
 import {ApplyDetail} from '../../../shared/domain/ApplyDetail';
 import {ApplyStateEnum, ApplyTypeEnum} from '../../../shared/domain/Enum';
 import {BehaviorSubject} from 'rxjs';
+import {DeviceService} from '../../../shared/service/device.service';
+import {ApplyService} from '../../../shared/service/apply.service';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-device-application-management',
@@ -20,253 +26,80 @@ export class DeviceApplicationManagementComponent implements OnInit {
   isVisible = false;
   pageIndex = 1;
   pageSize = 20;
+  staffNumber = 100001;
+  navigationSubscription;
 
+  state = this.router.snapshot.queryParams[`state`];
+  type = this.router.snapshot.queryParams[`type`];
+
+  data = [
+    // {
+    //   applyNo: 111111,
+    //   applyStaffNo: '100000',
+    //   checkStaffNo: '111111',
+    //   applyDate: '2019-1-11',
+    //   applyReason: '非常急用',
+    //   applyType: ApplyTypeEnum.URGENT,
+    //   applyState: ApplyStateEnum.COMMIT,
+    //   applyUpdateInfo: '',
+    //   applyUpdateDate: '2019-1-11',
+    // },
+  ];
+  temp: string;
   total = 0;    // 当前总数据，在服务器渲染时需要传入
   searchTerms = new BehaviorSubject<string>('');  // 查询
   applys: Apply[] = [];
   applydetails: ApplyDetail[] = [];
 
+
   constructor(private modalService: NzModalService,
-              private message: NzMessageService) {
+              private message: NzMessageService,
+              private applyService: ApplyService,
+              private router: ActivatedRoute,
+              private routerReload: Router,
+  ) {
     this.applyUpdateInfoForm = new FormGroup({
-      applyUpdateInfo: new FormControl('', [Validators.maxLength(255)]),
+      applyUpdateInfo: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      applyState: new FormControl(ApplyStateEnum, [Validators.required]),
     });
   }
-  applyDetailData = [
-    [
-      {
-      modelNo: 9901,
-      applyDetailQuantity: 100,
-      },
-      {
-      modelNo: 9902,
-      applyDetailQuantity: 200,
-      },
-    ],
-    [
-      {
-        modelNo: 9903,
-        applyDetailQuantity: 300,
-      },
-      {
-        modelNo: 9904,
-        applyDetailQuantity: 1004,
-      },
-    ],
-    [
-      {
-        modelNo: 9901,
-        applyDetailQuantity: 100,
-      },
-      {
-        modelNo: 9902,
-        applyDetailQuantity: 200,
-      },
-    ],
-    [
-      {
-        modelNo: 9903,
-        applyDetailQuantity: 300,
-      },
-      {
-        modelNo: 9904,
-        applyDetailQuantity: 1004,
-      },
-    ],
-    [
-      {
-        modelNo: 9903,
-        applyDetailQuantity: 300,
-      },
-      {
-        modelNo: 9904,
-        applyDetailQuantity: 1004,
-      },
-    ]
-  ];
-  applyData = [
-    {
-      applyNo: '1001',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: {
-        modelNo: 9901,
-        applyDetailQuantity: 100,
-      } ,
-      applyReason: '要用',
-      applyDate: '2018-1-1',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1002',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[2],
-      applyReason: '我要用',
-      applyDate: '2018-1-12',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1003',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[3],
-      applyReason: '它要用',
-      applyDate: '2018-1-29',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-1',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1004',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[4],
-      applyReason: '要用',
-      applyDate: '9102-1-14',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-4',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1005',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[5],
-      applyReason: '我要用',
-      applyDate: '2018-1-15',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-5',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1006',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[6],
-      applyReason: '它要用',
-      applyDate: '2018-1-16',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-6',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1007',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[7],
-      applyReason: '要用',
-      applyDate: '2018-1-1',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-7',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1008',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[8],
-      applyReason: '我要用',
-      applyDate: '2018-1-18',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-8',
-      applyUpdateInfo: '好',
-    },
-    {
-      applyNo: '1009',
-      applyType: ApplyTypeEnum.URGENT,
-      applyDetail: this.applyDetailData[9],
-      applyReason: '它要用',
-      applyDate: '2018-1-9',
-      applyState: ApplyStateEnum.COMMIT,
-      applyUpdateDate: '2019-1-9',
-      applyUpdateInfo: '好',
-    },
-  ];
 
-
-  size = 'default';
-  deviceDetailData = [
-    {
-      modelNo: '1111',
-      modelName: '实验室专用挖掘机',
-      applyDetailQuantity: 10,
-    },
-    {
-      modelNo: '2222',
-      modelName: '实验室专用吊车',
-      applyDetailQuantity: 20,
-    },
-    {
-      modelNo: '3333',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    }, {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-    {
-      modelNo: '4444',
-      modelName: '实验室专用搅拌机',
-      applyDetailQuantity: 30,
-    },
-
-  ];
-
-  panels = [
-    {
-      active: true,
-      disabled: false,
-      name: '设备申请 1',
-    },
-    {
-      active: false,
-      disabled: true,
-      name: '设备申请 2'
-    },
-    {
-      active: false,
-      disabled: false,
-      name: '设备申请 3'
-    },
-    {
-      active: false,
-      disabled: false,
-      name: '设备申请 4'
-    }
-  ];
-
-  openMap: { [name: string]: boolean } = {
-    sub1: true,
-    sub2: false,
-    sub3: false
-  };
 
   ngOnInit() {
+    if ( this.type === '普通' || this.type === '急需'  ) {
+      this.searchTerms.pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      ).subscribe(() => {
+          // this.findAll();
+          console.log(this.type);
+          this.findAllByType(this.type);
+        }
+      );
+    }
+    if ( this.state === '需修改' ) {  // TODO
+      this.searchTerms.pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      ).subscribe(() => {
+          // this.findAll();
+          console.log(this.type);
+          this.findAllByState(this.type);
+        }
+      );
+    }
+    if ( this.state === '已通过') {  // TODO
+      this.searchTerms.pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      ).subscribe(() => {
+          // this.findAll();
+          console.log(this.type);
+          this.findAllByState(this.type);
+        }
+      );
+    }
   }
-
   showConfirm(): void {
     this.modalService.confirm({
       nzTitle: '你确认该项申请通过吗?',
@@ -283,30 +116,122 @@ export class DeviceApplicationManagementComponent implements OnInit {
       nzTitle: '<i>你确认拒绝该项申请通过吗?</i>',
       nzContent: '<b>如果确认请点击确认</b>',
       nzOkType: 'danger',
-      nzOnOk: () => console.log('确认'),
+      nzOnOk: () => {
+        console.log('确认');
+        },
       nzCancelText: '取消'
     });
   }
-  addUpdateInfo(): void {       // 增加审核说明
+  addUpdateInfo(): void {       // 增加审核说明以及审核是否通过判断
     if (this.applyUpdateInfoForm.valid) {
+      this.loading = true;
       const apply: Apply = {
-        applyNo: this.applyUpdateInfoForm.get('applyUpdateInfo').value, // service TODO
+        applyNo: this.temp,
         applyUpdateInfo: this.applyUpdateInfoForm.get('applyUpdateInfo').value,
+        applyState: this.applyUpdateInfoForm.get('applyState').value,
       };
-      // service here
-      this.message.create('success', '添加成功');
-      this.isVisible = false;
+      console.log(apply);
+      this.applyService.update(apply, this.staffNumber).subscribe(   // 修改库房信息
+        u => {
+          this.applys.unshift(u);
+          this.isVisible = false;
+          this.message.create('success', '修改成功');
+          this.applyUpdateInfoForm.reset();
+          this.findAll();
+        }, () => {
+          this.loading = false;
+          this.message.create('error', '修改失败');
+        }
+      );
     } else {
-      this.message.create('warning', '填写数据有误');
+      this.message.create('warning', '请正确填写全部数据');
     }
   }
+  searchByApplyNo(searchValue: string): void {
+    this.pageIndex = 1;
+    this.applys = null;
+    this.applyService.findByNo(searchValue, this.staffNumber)
+      .subscribe(
+        (data) => {
+          if (!data[`0`]) {
+            this.applys = [data];
+            console.log([data]);
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          console.log('end');
+        }
+      );
+  }
 
-  openHandler(value: string): void {
-    for (const key in this.openMap) {
-      if (key !== value) {
-        this.openMap[key] = false;
-      }
+
+  findAllByType(type: ApplyTypeEnum, reset: boolean = false) {
+    if (reset) {
+      this.pageIndex = 1;
     }
+    this.applyService.total(this.staffNumber).subscribe(
+      (data) => {
+        this.total = data[`status`];
+        console.log(this.total);
+        this.applyService.findAllByType(this.pageIndex, this.pageSize, this.staffNumber, this.type)
+          .subscribe(
+            (data1) => {
+              if (data1[`length`] >=  0) {
+                console.log(data1);
+                this.loading = false;
+                this.applys = data1;
+              } else {
+                this.message.create('error', '发生错误！');
+              }
+            },
+            (error) => {
+              this.loading = false;
+              console.log(error);
+            },
+            () => {
+              console.log('end');
+            }
+          );
+      }
+    );
+  }
+  reload(): void {
+
+  }
+
+
+  findAllByState(type: ApplyStateEnum, reset: boolean = false) {
+    if (reset) {
+      this.pageIndex = 1;
+    }
+    this.applyService.total(this.staffNumber).subscribe(
+      (data) => {
+        this.total = data[`status`];
+        console.log(this.total);
+        this.applyService.findAllByState(this.pageIndex, this.pageSize, this.staffNumber, this.state)
+          .subscribe(
+            (data1) => {
+              if (data1[`length`] >=  0) {
+                console.log(data1);
+                this.loading = false;
+                this.applys = data1;
+              } else {
+                this.message.create('error', '发生错误！');
+              }
+            },
+            (error) => {
+              this.loading = false;
+              console.log(error);
+            },
+            () => {
+              console.log('end');
+            }
+          );
+      }
+    );
   }
 
 
@@ -314,15 +239,43 @@ export class DeviceApplicationManagementComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-    this.loading = false;     //  暂时使用 需要修改
-    // service here
+    this.applyService.total(this.staffNumber).subscribe(
+      (data) => {
+        this.total = data[`status`];
+        console.log(this.total);
+      }
+    );
+    this.loading = true;
+    this.applyService.findAll(this.pageIndex, this.pageSize, this.staffNumber)
+      .subscribe(
+        (data) => {
+          if (data[`length`] >=  0) {
+            console.log(data);
+            this.loading = false;
+            this.data = data;
+          } else {
+            this.message.create('error', '发生错误！');
+          }
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error);
+        },
+        () => {
+          console.log('end');
+        }
+      );
   }
 
 
   modApplySet(data: any): void {
-
     this.applyUpdateInfoForm.patchValue(data);
+  }
 
+  Destroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }
