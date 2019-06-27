@@ -133,9 +133,10 @@ export class DeviceApplicationManagementComponent implements OnInit {
       console.log(apply);
       this.applyService.update(apply, this.staffNumber).subscribe(   // 修改库房信息
         u => {
+          this.message.create('error', u[`message`]);
           this.applys.unshift(u);
           this.isVisible = false;
-          this.message.create('success', '修改成功');
+          // this.message.create('success', '修改成功');
           this.applyUpdateInfoForm.reset();
           this.findAll();
         }, () => {
